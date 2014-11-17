@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:key="com.aware.plugin.openweather" android:title="OpenWeather">
+    <CheckBoxPreference android:title="Active" android:key="status_plugin_openweather" android:summary="Local weather conditions, from OpenWeather." android:persistent="true" android:defaultValue="false"/>
+    <ListPreference android:defaultValue="metric" android:title="Measurement unit" android:key="units_plugin_openweather" android:persistent="true" android:entries="@array/units_labels" android:entryValues="@array/units_values"/>
+    
+
+</PreferenceScreen>
