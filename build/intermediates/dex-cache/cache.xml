@@ -24,7 +24,7 @@
         jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.aware.plugin.openweather/aware-core/unspecified/classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="d5f9c579acd828c3642a5f970218fadf4dee8837"/>
+        sha1="203b632df8629c2cae40aed0763416142d6d6afb"/>
     <item
         dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-4bacc4799643673ac7407162a940947e419cc58c.jar"
         jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.0/classes.jar"

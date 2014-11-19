@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- From: file:/Users/denzil/Dropbox/Programming/aware-client/aware-core/src/main/res/values/arrays.xml -->
-    <eat-comment />
-
+    <eat-comment/>
     <string-array name="clean_old_data_readable">
         <item>Never</item>
         <item>Weekly</item>
@@ -27,17 +25,14 @@
         <item>0</item>
     </string-array>
     <!-- From: file:/Users/denzil/Dropbox/Programming/aware-client/aware-core/src/main/res/values/bools.xml -->
-    <eat-comment />
-
-    <item name="display_aware" format="boolean" type="bool">false</item>
+    <eat-comment/>
+    <item format="boolean" name="display_aware" type="bool">true</item>
     <!-- From: file:/Users/denzil/Dropbox/Programming/aware-client/aware-core/src/main/res/values/color.xml -->
-    <eat-comment />
-
+    <eat-comment/>
     <color name="card_shadow">#AFAFAF</color>
     <color name="grey_background">#E5E5E5</color>
     <!-- From: file:/Users/denzil/Dropbox/Programming/aware-client/aware-core/src/main/res/values/strings.xml -->
-    <eat-comment />
-
+    <eat-comment/>
     <string name="app_name">AWARE</string>
     <string name="aware_activate_accessibility">Please activate AWARE here for overall stability.</string>
     <string name="aware_auto_update">Check for updates</string>
@@ -59,5 +54,4 @@
     <string name="drawer_open">Drawer is opened</string>
     <string name="read_permission">Allow read-only access to the Context Providers data.</string>
     <string name="write_permission">Allow read and write access to the Context Providers data.</string>
-
 </resources>
