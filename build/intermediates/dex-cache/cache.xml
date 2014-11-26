@@ -14,17 +14,23 @@
         revision="20.0.0"
         sha1="02315d1759d01e52495e040e6e538aaa2e91c7f6"/>
     <item
-        dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-938926b6ab59c37baf238c508c9cf86737870725.jar"
-        jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/internal_impl-21.0.2-65238a5830d0b97136f13e52e79775cc73315b1a.jar"
+        jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/libs/internal_impl-21.0.2.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f"/>
     <item
-        dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-eabc54920ba7220aac9cf58891a97eb8ba426daa.jar"
+        dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-39f742604eb3f06585bd85fd3f085420a9451db4.jar"
+        jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="7ae2d38807a43b2f2185ff4089a92c790b579e54"/>
+    <item
+        dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-eabc54920ba7220aac9cf58891a97eb8ba426daa.jar"
         jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.aware.plugin.openweather/aware-core/unspecified/classes.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="203b632df8629c2cae40aed0763416142d6d6afb"/>
+        sha1="2c90915647098b23852503a32153923867c5c0bd"/>
     <item
         dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-4bacc4799643673ac7407162a940947e419cc58c.jar"
         jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.0/classes.jar"
@@ -37,6 +43,12 @@
         jumboMode="false"
         revision="20.0.0"
         sha1="6c6b497aa9e3aadbaabf975379e7914fa9e65523"/>
+    <item
+        dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-d6d5da51f2a996dc24f5de3638a5e7b27533f139.jar"
+        jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.71/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da"/>
     <item
         dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/zbar-42efb0417029150244f2d50f3f2f8231be502919.jar"
         jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.aware.plugin.openweather/aware-core/unspecified/libs/zbar.jar"
@@ -55,6 +67,24 @@
         jumboMode="false"
         revision="20.0.0"
         sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
+    <item
+        dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-5a43f0c7ad75bc735ff466524d9e53cb24c5c224.jar"
+        jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3"/>
+    <item
+        dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-938926b6ab59c37baf238c508c9cf86737870725.jar"
+        jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+    <item
+        dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/support-annotations-21.0.2-2e9dcbe148a4b08eb37371c2d0f3707403d512e4.jar"
+        jar="/Users/denzil/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.2/support-annotations-21.0.2.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6"/>
     <item
         dex="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-29e373b57b6410a6f2fdd304a07ff57734f4ba72.jar"
         jar="/Users/denzil/Dropbox/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0/classes.jar"

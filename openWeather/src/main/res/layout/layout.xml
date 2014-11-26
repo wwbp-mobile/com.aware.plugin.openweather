@@ -16,8 +16,11 @@
         android:layout_column="0"
         android:layout_gravity="left|top"
         android:layout_row="0"
-        android:padding="5dp"
-        android:src="@drawable/ic_weather_unknown" />
+        android:src="@drawable/ic_weather_unknown"
+        android:adjustViewBounds="false"
+        android:scaleType="fitXY"
+        android:minHeight="90dp"
+        android:minWidth="90dp" />
 
     <TextView
         android:id="@+id/weather_city"
@@ -98,15 +101,21 @@
         android:id="@+id/clouds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/temps"
-        android:layout_alignTop="@+id/humidity"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="false"
+        android:layout_below="@+id/weather_description"
+        android:layout_toRightOf="@+id/humidity">
 
         <ImageView
             android:id="@+id/icon_cloudiness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_weather_clouds" />
+            android:src="@drawable/ic_weather_clouds"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:maxWidth="25dp"
+            android:minHeight="25dp" />
 
         <TextView
             android:id="@+id/weather_cloudiness"
@@ -114,22 +123,29 @@
             android:layout_height="wrap_content"
             android:text="100 %"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:textSize="10dp"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/humidity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/linearLayout1"
-        android:layout_toLeftOf="@+id/clouds"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:layout_below="@+id/weather_description"
+        android:layout_toRightOf="@+id/linearLayout1">
 
         <ImageView
             android:id="@+id/icon_humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_weather_humidity" />
+            android:src="@drawable/ic_weather_humidity"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:maxHeight="25dp"
+            android:maxWidth="25dp" />
 
         <TextView
             android:id="@+id/weather_humidity"
@@ -137,23 +153,30 @@
             android:layout_height="wrap_content"
             android:text="100 %"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:textSize="10dp"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/linearLayout3"
-        android:layout_toLeftOf="@+id/humidity"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_toRightOf="@+id/linearLayout3"
+        android:layout_below="@+id/weather_description">
 
         <ImageView
             android:id="@+id/icon_barometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_weather_barometer" />
+            android:src="@drawable/ic_weather_barometer"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:maxWidth="25dp"
+            android:minHeight="25dp" />
 
         <TextView
             android:id="@+id/weather_pressure"
@@ -161,28 +184,35 @@
             android:layout_height="wrap_content"
             android:text="1000.0 hPa"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:textSize="10dp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/weather_description"
         android:layout_marginTop="5dp"
-        android:layout_toLeftOf="@+id/linearLayout1" >
+        android:layout_below="@+id/weather_description"
+        android:layout_toRightOf="@+id/icon_weather">
 
         <ImageView
             android:id="@+id/icon_wind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_weather_wind" />
+            android:src="@drawable/ic_weather_wind"
+            android:scaleType="fitXY"
+            android:maxHeight="25dp"
+            android:maxWidth="25dp"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center_vertical" />
 
         <LinearLayout
             android:id="@+id/wind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
 
             <TextView
                 android:id="@+id/weather_wind"
@@ -190,7 +220,8 @@
                 android:layout_height="wrap_content"
                 android:text="10 m/s"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:textSize="10dp" />
 
             <TextView
                 android:id="@+id/weather_wind_degrees"
@@ -198,7 +229,8 @@
                 android:layout_height="wrap_content"
                 android:text="90º"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:textSize="10dp" />
         </LinearLayout>
     </LinearLayout>
 
