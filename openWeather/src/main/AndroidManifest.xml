@@ -1,11 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aware.plugin.openweather"
-    android:versionCode="6"
-    android:versionName="1.1" >
+    package="com.aware.plugin.openweather" >
 
-    <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="19" />
     <uses-permission android:name="com.aware.READ_CONTEXT_DATA"/>
     <uses-permission android:name="com.aware.WRITE_CONTEXT_DATA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -16,13 +11,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name">
-        <service android:label="OpenWeather" android:exported="true" android:name="com.aware.plugin.openweather.Plugin"></service>
-        <service android:exported="true" android:name="com.aware.plugin.openweather.Plugin$OpenWeather_Service"></service>
+        <service android:label="OpenWeather" android:exported="true" android:name="com.aware.plugin.openweather.Plugin"/>
+        <service android:exported="true" android:name="com.aware.plugin.openweather.Plugin$OpenWeather_Service" />
         <activity android:exported="true" android:launchMode="singleInstance" android:configChanges="keyboard|keyboardHidden|screenSize" android:name="com.aware.plugin.openweather.Settings">
         </activity>
-        <provider android:writePermission="com.aware.WRITE_CONTEXT_DATA" android:exported="true" android:name="com.aware.plugin.openweather.Provider" android:readPermission="com.aware.READ_CONTEXT_DATA" android:authorities="com.aware.plugin.openweather.provider.openweather"></provider>
-        <service android:name="com.aware.Aware"></service>
-        <service android:name="com.aware.Locations"></service>
+        <provider android:writePermission="com.aware.WRITE_CONTEXT_DATA" android:exported="true" android:name="com.aware.plugin.openweather.Provider" android:readPermission="com.aware.READ_CONTEXT_DATA" android:authorities="com.aware.plugin.openweather.provider.openweather" />
     </application>
 
 </manifest>

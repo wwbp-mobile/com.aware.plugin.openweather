@@ -58,7 +58,6 @@ public class Plugin extends Aware_Plugin {
 			Aware.setSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER, "metric");
 		}
 		
-		Aware.setSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG, true);
 		Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_LOCATION_NETWORK, true);
 		Aware.setSetting(getApplicationContext(), Aware_Preferences.FREQUENCY_LOCATION_NETWORK, 60 * 60);
 		Aware.setSetting(getApplicationContext(), Aware_Preferences.MIN_LOCATION_NETWORK_ACCURACY, 1000);
@@ -124,8 +123,8 @@ public class Plugin extends Aware_Plugin {
 	public void onDestroy() {
 		super.onDestroy();
 		unregisterReceiver(sLocationListener);
-		
-		Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_LOCATION_NETWORK, false);
+
+        Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_LOCATION_NETWORK, false);
 		Aware.setSetting(getApplicationContext(), Settings.STATUS_PLUGIN_OPENWEATHER, false);
 		Intent apply = new Intent(Aware.ACTION_AWARE_REFRESH);
 		sendBroadcast(apply);
@@ -150,9 +149,7 @@ public class Plugin extends Aware_Plugin {
 				HttpResponse server_response = httpObj.dataGET(String.format(OPENWEATHER_API_URL, latitude, longitude, Locale.getDefault().getLanguage(), Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER)), false);
 				if( server_response != null && server_response.getStatusLine().getStatusCode() == 200) {
 					try {
-						HttpResponse copy = server_response;
-						
-						JSONObject raw_data = new JSONObject( EntityUtils.toString(copy.getEntity()) );
+						JSONObject raw_data = new JSONObject( EntityUtils.toString(server_response.getEntity()) );
 						
 						JSONObject wind = raw_data.getJSONObject("wind");
 						JSONObject weather_characteristics = raw_data.getJSONObject("main");
