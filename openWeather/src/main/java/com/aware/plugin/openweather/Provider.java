@@ -20,7 +20,7 @@ import com.aware.utils.DatabaseHelper;
 
 public class Provider extends ContentProvider {
 
-	public static final int DATABASE_VERSION = 4;
+	public static final int DATABASE_VERSION = 5;
 	
 	/**
 	 * Provider authority: com.aware.plugin.openweather.provider.openweather
@@ -50,6 +50,10 @@ public class Provider extends ContentProvider {
 		OpenWeather_Data.WIND_SPEED + " real default 0," +
 		OpenWeather_Data.WIND_DEGREES + " real default 0," +
 		OpenWeather_Data.CLOUDINESS + " real default 0," +
+        OpenWeather_Data.RAIN + " real default 0," +
+        OpenWeather_Data.SNOW + " real default 0," +
+        OpenWeather_Data.SUNRISE + " real default 0," +
+        OpenWeather_Data.SUNSET + " real default 0," +
 		OpenWeather_Data.WEATHER_ICON_ID + " integer default 0," +
 		OpenWeather_Data.WEATHER_DESCRIPTION + " text default ''," +
 		"UNIQUE("+OpenWeather_Data.TIMESTAMP+","+OpenWeather_Data.DEVICE_ID+")"
@@ -90,6 +94,10 @@ public class Provider extends ContentProvider {
 		 * % of clouds
 		 */
 		public static final String CLOUDINESS = "cloudiness";
+        public static final String RAIN = "rain";
+        public static final String SNOW = "snow";
+        public static final String SUNRISE = "sunrise";
+        public static final String SUNSET = "sunset";
 		public static final String WEATHER_ICON_ID = "weather_icon_id";
 		public static final String WEATHER_DESCRIPTION = "weather_description";
 	}
@@ -193,6 +201,10 @@ public class Provider extends ContentProvider {
 		openWeatherMap.put(OpenWeather_Data.WIND_SPEED, OpenWeather_Data.WIND_SPEED);
 		openWeatherMap.put(OpenWeather_Data.WIND_DEGREES, OpenWeather_Data.WIND_DEGREES);
 		openWeatherMap.put(OpenWeather_Data.CLOUDINESS, OpenWeather_Data.CLOUDINESS);
+        openWeatherMap.put(OpenWeather_Data.RAIN, OpenWeather_Data.RAIN);
+        openWeatherMap.put(OpenWeather_Data.SNOW, OpenWeather_Data.SNOW);
+        openWeatherMap.put(OpenWeather_Data.SUNRISE, OpenWeather_Data.SUNRISE);
+        openWeatherMap.put(OpenWeather_Data.SUNSET, OpenWeather_Data.SUNSET);
 		openWeatherMap.put(OpenWeather_Data.WEATHER_ICON_ID, OpenWeather_Data.WEATHER_ICON_ID);
 		openWeatherMap.put(OpenWeather_Data.WEATHER_DESCRIPTION, OpenWeather_Data.WEATHER_DESCRIPTION);
 		

@@ -43,6 +43,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 	@Override
 	protected void onResume() {
 		super.onResume();
+        syncSettings();
 	};
 
 	@Override

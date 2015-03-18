@@ -48,11 +48,8 @@ public class Plugin extends Aware_Plugin {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
-		Intent aware_framework = new Intent(this, Aware.class);
-		startService(aware_framework);
-		
-		Aware.setSetting(getApplicationContext(), Settings.STATUS_PLUGIN_OPENWEATHER, true);
+
+		Aware.startPlugin(this, getPackageName());
 		
 		if( Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER).length() == 0 ) {
 			Aware.setSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER, "metric");
@@ -124,10 +121,8 @@ public class Plugin extends Aware_Plugin {
 		super.onDestroy();
 		unregisterReceiver(sLocationListener);
 
+        Aware.stopPlugin(this, getPackageName());
         Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_LOCATION_NETWORK, false);
-		Aware.setSetting(getApplicationContext(), Settings.STATUS_PLUGIN_OPENWEATHER, false);
-		Intent apply = new Intent(Aware.ACTION_AWARE_REFRESH);
-		sendBroadcast(apply);
 	}
 	
 	/**
@@ -155,6 +150,9 @@ public class Plugin extends Aware_Plugin {
 						JSONObject weather_characteristics = raw_data.getJSONObject("main");
 						JSONObject weather = raw_data.getJSONArray("weather").getJSONObject(0);
 						JSONObject clouds = raw_data.getJSONObject("clouds");
+                        JSONObject rain = raw_data.optJSONObject("rain");
+                        JSONObject snow = raw_data.optJSONObject("snow");
+                        JSONObject sys = raw_data.getJSONObject("sys");
 						
 						ContentValues weather_data = new ContentValues();
 						weather_data.put(OpenWeather_Data.TIMESTAMP, System.currentTimeMillis());
@@ -169,6 +167,10 @@ public class Plugin extends Aware_Plugin {
 						weather_data.put(OpenWeather_Data.WIND_SPEED, wind.getDouble("speed"));
 						weather_data.put(OpenWeather_Data.WIND_DEGREES, wind.getDouble("deg"));
 						weather_data.put(OpenWeather_Data.CLOUDINESS, clouds.getDouble("all"));
+                        weather_data.put(OpenWeather_Data.RAIN, rain.optDouble("3h",0));
+                        weather_data.put(OpenWeather_Data.SNOW, snow.optDouble("3h",0));
+                        weather_data.put(OpenWeather_Data.SUNRISE, sys.getDouble("sunrise"));
+                        weather_data.put(OpenWeather_Data.SUNSET, sys.getDouble("sunset"));
 						weather_data.put(OpenWeather_Data.WEATHER_ICON_ID, weather.getInt("id"));
 						weather_data.put(OpenWeather_Data.WEATHER_DESCRIPTION, weather.getString("main") + ": "+weather.getString("description"));
 						
