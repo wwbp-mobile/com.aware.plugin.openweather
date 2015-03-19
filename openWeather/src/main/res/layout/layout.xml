@@ -162,7 +162,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_toRightOf="@+id/wind"
+        android:layout_toRightOf="@+id/wind_wrapper"
         android:layout_below="@+id/weather_description">
 
         <ImageView
@@ -187,7 +187,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/wind"
+        android:id="@+id/wind_wrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -230,6 +230,125 @@
                 android:textColor="#000"
                 android:textSize="10dp" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/wind_wrapper"
+        android:layout_alignStart="@+id/wind_wrapper"
+        android:gravity="center_vertical"
+        android:id="@+id/rain_wrapper"
+        android:layout_below="@+id/wind_wrapper">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/icon_rain"
+            android:src="@drawable/ic_action_rain"
+            android:scaleType="fitXY"
+            android:maxWidth="25dp"
+            android:maxHeight="25dp"
+            android:adjustViewBounds="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0 mm"
+            android:id="@+id/rain"
+            android:textColor="#000"
+            android:textSize="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/rain_wrapper"
+        android:layout_alignLeft="@+id/barometer"
+        android:layout_alignStart="@+id/barometer"
+        android:gravity="center_vertical"
+        android:id="@+id/snow_wrapper">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/icon_snow"
+            android:src="@drawable/ic_action_snow"
+            android:adjustViewBounds="true"
+            android:maxHeight="25dp"
+            android:maxWidth="25dp"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0 mm"
+            android:id="@+id/snow"
+            android:textSize="10dp"
+            android:textColor="#000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/snow_wrapper"
+        android:layout_toRightOf="@+id/snow_wrapper"
+        android:layout_toEndOf="@+id/snow_wrapper"
+        android:id="@+id/sunrise_wrapper"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/icon_sunrise"
+            android:src="@drawable/ic_action_sunrise"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:maxWidth="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0h00"
+            android:id="@+id/sunrise"
+            android:textColor="#000"
+            android:textSize="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sunrise_wrapper"
+        android:layout_toRightOf="@+id/sunrise_wrapper"
+        android:layout_toEndOf="@+id/sunrise_wrapper"
+        android:id="@+id/sunset_wrapper"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/icon_sunset"
+            android:src="@drawable/ic_action_sunset"
+            android:scaleType="fitXY"
+            android:maxWidth="25dp"
+            android:maxHeight="25dp"
+            android:adjustViewBounds="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0h00"
+            android:id="@+id/sunset"
+            android:textColor="#000"
+            android:textSize="10dp" />
     </LinearLayout>
 
 </RelativeLayout>
