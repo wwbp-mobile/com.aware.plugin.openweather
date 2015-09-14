@@ -5,25 +5,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
 import com.aware.ui.Stream_UI;
 import com.aware.utils.IContextCard;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class ContextCard implements IContextCard {
 
-    private int refresh_interval = 1 * 1000;
+    private int refresh_interval = 15 * 1000;
 
     private Handler uiRefresher = new Handler(Looper.getMainLooper());
     private Runnable uiChanger = new Runnable() {
@@ -81,6 +90,10 @@ public class ContextCard implements IContextCard {
 
                 }
                 if( latest_weather != null && ! latest_weather.isClosed() ) latest_weather.close();
+
+                weather_plot.removeAllViews();
+                weather_plot.addView(drawGraph(sContext));
+                weather_plot.invalidate();
             }
 
             //Reset timer and schedule the next card refresh
@@ -97,6 +110,7 @@ public class ContextCard implements IContextCard {
     private LayoutInflater sInflater;
     
     private View card;
+    private LinearLayout weather_plot;
     private ImageView weather_icon; 
     private TextView weather_city;
     private TextView weather_description;
@@ -140,11 +154,72 @@ public class ContextCard implements IContextCard {
         weather_snow = (TextView) card.findViewById(R.id.snow);
         sunrise = (TextView) card.findViewById(R.id.sunrise);
         sunset = (TextView) card.findViewById(R.id.sunset);
+        weather_plot = (LinearLayout) card.findViewById(R.id.weather_plot);
 		
 		uiRefresher.post(uiChanger);
 		
 		return card;
 	}
+
+    private LineChart drawGraph( Context context ) {
+        //Get today's time from the beginning in milliseconds
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(System.currentTimeMillis());
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
+        ArrayList<String> x_hours = new ArrayList<>();
+        for(int i=0; i<24; i++) {
+            x_hours.add(String.valueOf(i));
+        }
+
+        ArrayList<Entry> barEntries = new ArrayList<>();
+        //add frequencies to the right hour buffer
+        Cursor weatherData = context.getContentResolver().query(OpenWeather_Data.CONTENT_URI, new String[]{ OpenWeather_Data.TEMPERATURE,"strftime('%H',"+ OpenWeather_Data.TIMESTAMP + "/1000, 'unixepoch', 'localtime')+0 as time_of_day" }, OpenWeather_Data.TIMESTAMP + " >= " + c.getTimeInMillis() + " ) GROUP BY ( time_of_day ", null, "time_of_day ASC");
+        if( weatherData != null && weatherData.moveToFirst() ) {
+            do{
+                barEntries.add( new Entry(weatherData.getInt(0), weatherData.getInt(1)) );
+            } while( weatherData.moveToNext() );
+        }
+        if( weatherData != null && ! weatherData.isClosed()) weatherData.close();
+
+        LineDataSet dataSet = new LineDataSet(barEntries, "Weather");
+        dataSet.setColor(Color.parseColor("#33B5E5"));
+        dataSet.setDrawValues(false);
+
+        LineData data = new LineData(x_hours, dataSet);
+
+        LineChart mChart = new LineChart(context);
+        mChart.setContentDescription("");
+        mChart.setDescription("");
+        mChart.setMinimumHeight(200);
+        mChart.setBackgroundColor(Color.WHITE);
+        mChart.setDrawGridBackground(false);
+        mChart.setDrawBorders(false);
+
+        YAxis left = mChart.getAxisLeft();
+        left.setDrawLabels(true);
+        left.setDrawGridLines(true);
+        left.setDrawAxisLine(true);
+
+        YAxis right = mChart.getAxisRight();
+        right.setDrawAxisLine(false);
+        right.setDrawLabels(false);
+        right.setDrawGridLines(false);
+
+        XAxis bottom = mChart.getXAxis();
+        bottom.setPosition(XAxis.XAxisPosition.BOTTOM);
+        bottom.setSpaceBetweenLabels(0);
+        bottom.setDrawGridLines(false);
+
+        mChart.setData(data);
+        mChart.invalidate();
+        mChart.animateX(1000);
+
+        return mChart;
+    }
 
     //This is a BroadcastReceiver that keeps track of stream status. Used to stop the refresh when user leaves the stream and restart again otherwise
     private StreamObs streamObs = new StreamObs();

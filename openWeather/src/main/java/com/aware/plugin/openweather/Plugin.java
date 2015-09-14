@@ -1,22 +1,9 @@
 package com.aware.plugin.openweather;
 
-import java.io.IOException;
-import java.util.Locale;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.IntentService;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,16 +11,18 @@ import android.util.Log;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
-import com.aware.Locations;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
-import com.aware.providers.Locations_Provider.Locations_Data;
 import com.aware.utils.Aware_Plugin;
 import com.aware.utils.Http;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Locale;
 
 public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 	
@@ -171,11 +160,11 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 			double longitude = location.getLongitude();
 			
 			if( latitude != 0 && longitude != 0 ) {
-				Http httpObj = new Http();
-				HttpResponse server_response = httpObj.dataGET(String.format(OPENWEATHER_API_URL, latitude, longitude, Locale.getDefault().getLanguage(), Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER)), false);
-				if( server_response != null && server_response.getStatusLine().getStatusCode() == 200) {
+				Http httpObj = new Http(this);
+				String server_response = httpObj.dataGET(String.format(OPENWEATHER_API_URL, latitude, longitude, Locale.getDefault().getLanguage(), Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER)), false);
+				if( server_response.length() > 0 ) {
 					try {
-						JSONObject raw_data = new JSONObject( EntityUtils.toString(server_response.getEntity()) );
+						JSONObject raw_data = new JSONObject( server_response );
 
                         if( DEBUG ) Log.d(Plugin.TAG,"OpenWeather answer: " + raw_data.toString(5));
 						
@@ -256,12 +245,8 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 						
 						if( DEBUG) Log.d(TAG, weather_data.toString());
 						
-					} catch (ParseException e) {
-						if( DEBUG ) Log.d(TAG,"Error parsing JSON from server: " + e.getMessage());
 					} catch (JSONException e) {
 						if( DEBUG ) Log.d(TAG,"Error reading JSON: " + e.getMessage());
-					} catch (IOException e) {
-						if( DEBUG ) Log.d(TAG,"Error receiving JSON from server: " + e.getMessage());
 					} catch( NullPointerException e ) {
                         if( DEBUG ) Log.d(TAG,"Failed to parse JSON from server:");
                         e.printStackTrace();

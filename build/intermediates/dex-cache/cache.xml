@@ -2,11 +2,60 @@
 <items version="2" >
 
     <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.8.0/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4a135d56554069e5d0ff80e3220e887e57146ee5">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-39d0a3fefd8380389a2b12b8f550bfa62e8536a8.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-435e43d2df3a6a5b6227a4960dd4ae947d54bc1a.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.6/libs/mqtt-client-0.4.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="02315d1759d01e52495e040e6e538aaa2e91c7f6">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/mqtt-client-0.4.0-460d4ea5e2a2f454e91cfed05c7c726f71b2a8c9.jar" />
+    </item>
+    <item
         jar="/Users/denzil/BTSync/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
         jumboMode="false"
         revision="22.0.0"
         sha1="d84409890828e07d344a3b9b1da545dba9897b51">
         <dex dex="/Users/denzil/BTSync/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-14dfe2d584b0f7732ac5aebf59a95fbcf99419a4.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.6/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="59132ea365e82d34a1f294867bac8eb926b53594">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-07f0c18c08dfec91f325a3e1db5eb3ceac3c0aa3.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.8.0/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="cb6fab7a71fa9ec1f483d44c5fca65ab469d8aca">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-63d7f91b7cd4802fa49c94f390fede89c08331ef.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-1c685a98b3616b7081c3a2cb8320c5425b7b092e.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v2.1.3/3fce86548feba9dd220128fa651498c51d099cd8/MPAndroidChart-v2.1.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3fce86548feba9dd220128fa651498c51d099cd8">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/MPAndroidChart-v2.1.3-79c6229f1583c078c7c779a6e3749d9c443f18a0.jar" />
     </item>
     <item
         jar="/Users/denzil/BTSync/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.3.2/classes.jar"
@@ -23,6 +72,27 @@
         <dex dex="/Users/denzil/BTSync/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-ba1d0b1a6c32c1464017738aa4293073e631e67f.jar" />
     </item>
     <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-f29fe51eb42530bee37493d4bd427e72fbc280cc.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-046a93709519ef67c1b914d790988a427b99c45c.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.1/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="39ae02ce40c3ac828abbf780ce0ff5d7a28b7d6a">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-1682d8499294e41b77705fa29365e88d2c915108.jar" />
+    </item>
+    <item
         jar="/Users/denzil/BTSync/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
         jumboMode="false"
         revision="22.0.0"
@@ -35,6 +105,20 @@
         revision="22.0.0"
         sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
         <dex dex="/Users/denzil/BTSync/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-ba2202581f4adddc09d97fe195ea6ee7696b3675.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.6/libs/zbar.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0a7b88ba1496a0b4af76069ad40dacd3897149e0">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/zbar-97827d19c201892e3e30a65321e390d8c177456e.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.8.0/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c0c912d58c9468b1f9d9769c8975afdf2c85d681">
+        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/classes-0f23935ad5227a664a828a5be9b54590468daff1.jar" />
     </item>
     <item
         jar="/Users/denzil/BTSync/Programming/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.3.2/libs/zbar.jar"

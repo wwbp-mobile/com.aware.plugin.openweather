@@ -1,6 +1,5 @@
 package com.aware.plugin.openweather;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -62,18 +61,20 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 			boolean is_active = sharedPreferences.getBoolean(key, false);
 			Aware.setSetting(getApplicationContext(), key, is_active);
 			if( is_active ) {
-				Aware.startPlugin(getApplicationContext(), getPackageName());
+				Aware.startPlugin(getApplicationContext(), "com.aware.plugin.openweather");
 			} else {
-				Aware.stopPlugin(getApplicationContext(), getPackageName());
+				Aware.stopPlugin(getApplicationContext(), "com.aware.plugin.openweather");
 			}	
 		}
 		if( preference.getKey().equals(UNITS_PLUGIN_OPENWEATHER)) {
 			preference.setSummary(sharedPreferences.getString(key, "metric"));
 			Aware.setSetting(getApplicationContext(), key, sharedPreferences.getString(key, "metric"));
+			Aware.startPlugin(getApplicationContext(), "com.aware.plugin.openweather");
 		}
         if( preference.getKey().equals(PLUGIN_OPENWEATHER_FREQUENCY)) {
             preference.setSummary("Every " + sharedPreferences.getString(key,"30") + " minute(s)");
-            Aware.setSetting(getApplicationContext(), key, sharedPreferences.getString(key,"30"));
+            Aware.setSetting(getApplicationContext(), key, sharedPreferences.getString(key, "30"));
+			Aware.startPlugin(getApplicationContext(), "com.aware.plugin.openweather");
         }
 	}
 }
