@@ -52,8 +52,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 	public void onCreate() {
 		super.onCreate();
 
-		Aware.startPlugin(this, getPackageName());
-
         if( Aware.getSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER).length() == 0 ) {
             Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, true);
         }
@@ -78,7 +76,11 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 		TABLES_FIELDS = Provider.TABLES_FIELDS;
 		CONTEXT_URIS = new Uri[]{ OpenWeather_Data.CONTENT_URI };
 
-        buildGoogleApiClient();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApiIfAvailable(LocationServices.API)
+                .build();
 
         locationRequest = new LocationRequest();
         locationRequest.setFastestInterval(1000);
@@ -86,18 +88,10 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
         openWeatherIntent = new Intent(this, OpenWeather_Service.class);
         openWeatherFetcher = PendingIntent.getService(this, 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Aware.startPlugin(this, "com.aware.plugin.openweather");
 	}
 
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-
-        mGoogleApiClient.connect();
-    }
-	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
         if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() ) mGoogleApiClient.connect();
@@ -119,9 +113,11 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 		super.onDestroy();
 
         Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_LOCATION_NETWORK, false);
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, openWeatherFetcher);
+        if( mGoogleApiClient != null ) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, openWeatherFetcher);
+        }
 
-        Aware.stopPlugin(this, getPackageName());
+        Aware.stopPlugin(this, "com.aware.plugin.openweather");
 	}
 
     @Override
@@ -140,7 +136,9 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {}
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        if( connectionResult.getErrorCode() == ConnectionResult.API_UNAVAILABLE ) stopSelf();
+    }
 
     /**
 	 * Background service that will connect to OpenWeather API and fetch and store current weather conditions depending on the user's location
