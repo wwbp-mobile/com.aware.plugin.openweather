@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
@@ -38,7 +40,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 	 */
 	public static final String EXTRA_OPENWEATHER = "openweather";
 	
-	private static final String OPENWEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&units=%s";
+	private static final String OPENWEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&units=%s&appid=%s";
 	private static ContextProducer sContextProducer;
 	private static JSONObject sOpenWeather;
 
@@ -60,6 +62,9 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 		}
         if( Aware.getSetting(getApplicationContext(), Settings.PLUGIN_OPENWEATHER_FREQUENCY).length() == 0 ) {
             Aware.setSetting(getApplicationContext(), Settings.PLUGIN_OPENWEATHER_FREQUENCY, 30);
+        }
+        if( Aware.getSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY).length() == 0 ) {
+            Aware.setSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY, "");
         }
 
 		CONTEXT_PRODUCER = new ContextProducer() {
@@ -94,7 +99,8 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-        if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() ) mGoogleApiClient.connect();
+        if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() )
+            mGoogleApiClient.connect();
 
         TAG = "AWARE::OpenWeather";
         DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
@@ -159,97 +165,98 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 			
 			if( latitude != 0 && longitude != 0 ) {
 				Http httpObj = new Http(this);
-				String server_response = httpObj.dataGET(String.format(OPENWEATHER_API_URL, latitude, longitude, Locale.getDefault().getLanguage(), Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER)), false);
-				if( server_response.length() > 0 ) {
-					try {
-						JSONObject raw_data = new JSONObject( server_response );
+				String server_response = httpObj.dataGET(String.format(OPENWEATHER_API_URL, latitude, longitude, Locale.getDefault().getLanguage(), Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER), Aware.getSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY)), false);
 
-                        if( DEBUG ) Log.d(Plugin.TAG,"OpenWeather answer: " + raw_data.toString(5));
-						
-						JSONObject wind = raw_data.getJSONObject("wind");
-						JSONObject weather_characteristics = raw_data.getJSONObject("main");
-						JSONObject weather = raw_data.getJSONArray("weather").getJSONObject(0);
-						JSONObject clouds = raw_data.getJSONObject("clouds");
+                if( server_response.length() == 0 || server_response.contains("Invalid API key") ) return;
 
-                        JSONObject rain = null;
-                        if( raw_data.opt("rain") != null ) {
-                            rain = raw_data.optJSONObject("rain");
-                        }
-                        JSONObject snow = null;
-                        if( raw_data.opt("snow") != null ) {
-                            snow = raw_data.optJSONObject("snow");
-                        }
-                        JSONObject sys = raw_data.getJSONObject("sys");
-						
-						ContentValues weather_data = new ContentValues();
-						weather_data.put(OpenWeather_Data.TIMESTAMP, System.currentTimeMillis());
-						weather_data.put(OpenWeather_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
-						weather_data.put(OpenWeather_Data.CITY, raw_data.getString("name"));
-						weather_data.put(OpenWeather_Data.TEMPERATURE, weather_characteristics.getDouble("temp"));
-						weather_data.put(OpenWeather_Data.TEMPERATURE_MAX, weather_characteristics.getDouble("temp_max"));
-						weather_data.put(OpenWeather_Data.TEMPERATURE_MIN, weather_characteristics.getDouble("temp_min"));
-						weather_data.put(OpenWeather_Data.UNITS, Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER));
-						weather_data.put(OpenWeather_Data.HUMIDITY, weather_characteristics.getDouble("humidity"));
-						weather_data.put(OpenWeather_Data.PRESSURE, weather_characteristics.getDouble("pressure"));
-						weather_data.put(OpenWeather_Data.WIND_SPEED, wind.getDouble("speed"));
-						weather_data.put(OpenWeather_Data.WIND_DEGREES, wind.getDouble("deg"));
-						weather_data.put(OpenWeather_Data.CLOUDINESS, clouds.getDouble("all"));
+                try {
+                    JSONObject raw_data = new JSONObject( server_response );
 
-                        double rain_value = 0;
-                        if( rain != null ) {
-                            if (rain.opt("1h") != null) {
-                                rain_value = rain.optDouble("1h", 0);
-                            } else if (rain.opt("3h") != null) {
-                                rain_value = rain.optDouble("3h", 0);
-                            } else if (rain.opt("6h") != null) {
-                                rain_value = rain.optDouble("6h", 0);
-                            } else if (rain.opt("12h") != null) {
-                                rain_value = rain.optDouble("12h", 0);
-                            } else if (rain.opt("24h") != null) {
-                                rain_value = rain.optDouble("24h", 0);
-                            } else if (rain.opt("day") != null) {
-                                rain_value = rain.optDouble("day", 0);
-                            }
-                        }
+                    if( DEBUG ) Log.d(Plugin.TAG,"OpenWeather answer: " + raw_data.toString(5));
 
-                        double snow_value = 0;
-                        if( snow != null ) {
-                            if (snow.opt("1h") != null) {
-                                snow_value = snow.optDouble("1h", 0);
-                            } else if (snow.opt("3h") != null) {
-                                snow_value = snow.optDouble("3h", 0);
-                            } else if (snow.opt("6h") != null) {
-                                snow_value = snow.optDouble("6h", 0);
-                            } else if (snow.opt("12h") != null) {
-                                snow_value = snow.optDouble("12h", 0);
-                            } else if (snow.opt("24h") != null) {
-                                snow_value = snow.optDouble("24h", 0);
-                            } else if (snow.opt("day") != null) {
-                                snow_value = snow.optDouble("day", 0);
-                            }
-                        }
-                        weather_data.put(OpenWeather_Data.RAIN, rain_value);
-                        weather_data.put(OpenWeather_Data.SNOW, snow_value);
-                        weather_data.put(OpenWeather_Data.SUNRISE, sys.getDouble("sunrise"));
-                        weather_data.put(OpenWeather_Data.SUNSET, sys.getDouble("sunset"));
-						weather_data.put(OpenWeather_Data.WEATHER_ICON_ID, weather.getInt("id"));
-						weather_data.put(OpenWeather_Data.WEATHER_DESCRIPTION, weather.getString("main") + ": "+weather.getString("description"));
-						
-						getContentResolver().insert(OpenWeather_Data.CONTENT_URI, weather_data);
-						
-						sOpenWeather = raw_data;
+                    JSONObject wind = raw_data.getJSONObject("wind");
+                    JSONObject weather_characteristics = raw_data.getJSONObject("main");
+                    JSONObject weather = raw_data.getJSONArray("weather").getJSONObject(0);
+                    JSONObject clouds = raw_data.getJSONObject("clouds");
 
-						sContextProducer.onContext();
-						
-						if( DEBUG) Log.d(TAG, weather_data.toString());
-						
-					} catch (JSONException e) {
-						if( DEBUG ) Log.d(TAG,"Error reading JSON: " + e.getMessage());
-					} catch( NullPointerException e ) {
-                        if( DEBUG ) Log.d(TAG,"Failed to parse JSON from server:");
-                        e.printStackTrace();
+                    JSONObject rain = null;
+                    if( raw_data.opt("rain") != null ) {
+                        rain = raw_data.optJSONObject("rain");
                     }
-				}
+                    JSONObject snow = null;
+                    if( raw_data.opt("snow") != null ) {
+                        snow = raw_data.optJSONObject("snow");
+                    }
+                    JSONObject sys = raw_data.getJSONObject("sys");
+
+                    ContentValues weather_data = new ContentValues();
+                    weather_data.put(OpenWeather_Data.TIMESTAMP, System.currentTimeMillis());
+                    weather_data.put(OpenWeather_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
+                    weather_data.put(OpenWeather_Data.CITY, raw_data.getString("name"));
+                    weather_data.put(OpenWeather_Data.TEMPERATURE, weather_characteristics.getDouble("temp"));
+                    weather_data.put(OpenWeather_Data.TEMPERATURE_MAX, weather_characteristics.getDouble("temp_max"));
+                    weather_data.put(OpenWeather_Data.TEMPERATURE_MIN, weather_characteristics.getDouble("temp_min"));
+                    weather_data.put(OpenWeather_Data.UNITS, Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER));
+                    weather_data.put(OpenWeather_Data.HUMIDITY, weather_characteristics.getDouble("humidity"));
+                    weather_data.put(OpenWeather_Data.PRESSURE, weather_characteristics.getDouble("pressure"));
+                    weather_data.put(OpenWeather_Data.WIND_SPEED, wind.getDouble("speed"));
+                    weather_data.put(OpenWeather_Data.WIND_DEGREES, wind.getDouble("deg"));
+                    weather_data.put(OpenWeather_Data.CLOUDINESS, clouds.getDouble("all"));
+
+                    double rain_value = 0;
+                    if( rain != null ) {
+                        if (rain.opt("1h") != null) {
+                            rain_value = rain.optDouble("1h", 0);
+                        } else if (rain.opt("3h") != null) {
+                            rain_value = rain.optDouble("3h", 0);
+                        } else if (rain.opt("6h") != null) {
+                            rain_value = rain.optDouble("6h", 0);
+                        } else if (rain.opt("12h") != null) {
+                            rain_value = rain.optDouble("12h", 0);
+                        } else if (rain.opt("24h") != null) {
+                            rain_value = rain.optDouble("24h", 0);
+                        } else if (rain.opt("day") != null) {
+                            rain_value = rain.optDouble("day", 0);
+                        }
+                    }
+
+                    double snow_value = 0;
+                    if( snow != null ) {
+                        if (snow.opt("1h") != null) {
+                            snow_value = snow.optDouble("1h", 0);
+                        } else if (snow.opt("3h") != null) {
+                            snow_value = snow.optDouble("3h", 0);
+                        } else if (snow.opt("6h") != null) {
+                            snow_value = snow.optDouble("6h", 0);
+                        } else if (snow.opt("12h") != null) {
+                            snow_value = snow.optDouble("12h", 0);
+                        } else if (snow.opt("24h") != null) {
+                            snow_value = snow.optDouble("24h", 0);
+                        } else if (snow.opt("day") != null) {
+                            snow_value = snow.optDouble("day", 0);
+                        }
+                    }
+                    weather_data.put(OpenWeather_Data.RAIN, rain_value);
+                    weather_data.put(OpenWeather_Data.SNOW, snow_value);
+                    weather_data.put(OpenWeather_Data.SUNRISE, sys.getDouble("sunrise"));
+                    weather_data.put(OpenWeather_Data.SUNSET, sys.getDouble("sunset"));
+                    weather_data.put(OpenWeather_Data.WEATHER_ICON_ID, weather.getInt("id"));
+                    weather_data.put(OpenWeather_Data.WEATHER_DESCRIPTION, weather.getString("main") + ": "+weather.getString("description"));
+
+                    getContentResolver().insert(OpenWeather_Data.CONTENT_URI, weather_data);
+
+                    sOpenWeather = raw_data;
+
+                    sContextProducer.onContext();
+
+                    if( DEBUG) Log.d(TAG, weather_data.toString());
+
+                } catch (JSONException e) {
+                    if( DEBUG ) Log.d(TAG,"Error reading JSON: " + e.getMessage());
+                } catch( NullPointerException e ) {
+                    if( DEBUG ) Log.d(TAG,"Failed to parse JSON from server:");
+                    e.printStackTrace();
+                }
 			}
 		}
 	}
