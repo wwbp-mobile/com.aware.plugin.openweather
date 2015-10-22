@@ -30,7 +30,7 @@ public class Provider extends ContentProvider {
 	private static final int OPENWEATHER = 1;
 	private static final int OPENWEATHER_ID = 2;
 	
-	public static final String DATABASE_NAME = Environment.getExternalStorageDirectory() + "/AWARE/plugin_openweather.db";
+	public static final String DATABASE_NAME = "plugin_openweather.db";
 	
 	public static final String[] DATABASE_TABLES = {
 		"plugin_openweather"

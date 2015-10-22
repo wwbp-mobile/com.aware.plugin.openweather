@@ -1,12 +1,16 @@
 package com.aware.plugin.openweather;
 
+import android.Manifest;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ServiceCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -49,6 +53,14 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     private static LocationRequest locationRequest;
     private static Intent openWeatherIntent;
     private static PendingIntent openWeatherFetcher;
+
+    /**
+     * Used to dynamically request the needed preferences
+     */
+    public static final String[] REQUIRED_PERMISSIONS = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
 	
 	@Override
 	public void onCreate() {
@@ -99,18 +111,29 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-        if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() )
-            mGoogleApiClient.connect();
 
-        TAG = "AWARE::OpenWeather";
-        DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
+        int location_access = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        int storage_access = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        if( DEBUG) Log.d(TAG,"Updating weather every " + Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY) + " minute(s)");
-        locationRequest.setInterval( Integer.valueOf(Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY)) * 60 * 1000 ); //in minutes
+        if( location_access != PackageManager.PERMISSION_GRANTED || storage_access != PackageManager.PERMISSION_GRANTED ) {
+            Intent permissionRequest = new Intent(this, PermissionHandler.class);
+            permissionRequest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(permissionRequest);
+        } else {
+            if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() )
+                mGoogleApiClient.connect();
 
-        if(mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
+            TAG = "AWARE::OpenWeather";
+            DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
+
+            if( DEBUG) Log.d(TAG,"Updating weather every " + Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY) + " minute(s)");
+            locationRequest.setInterval( Integer.valueOf(Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY)) * 60 * 1000 ); //in minutes
+
+            if(mGoogleApiClient.isConnected()) {
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
+            }
         }
+
 		return START_STICKY;
 	}
 
