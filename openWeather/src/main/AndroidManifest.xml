@@ -17,8 +17,6 @@
         <service android:exported="true" android:name="com.aware.plugin.openweather.Plugin$OpenWeather_Service" />
         <activity android:exported="true" android:launchMode="singleInstance" android:configChanges="keyboard|keyboardHidden|screenSize" android:name="com.aware.plugin.openweather.Settings" android:theme="@style/Theme.Aware" />
 
-        <activity android:name="com.aware.plugin.openweather.PermissionHandler" android:theme="@android:style/Theme.NoDisplay" android:noHistory="true" android:excludeFromRecents="true" />
-
         <provider
             android:writePermission="com.aware.WRITE_CONTEXT_DATA"
             android:exported="true"

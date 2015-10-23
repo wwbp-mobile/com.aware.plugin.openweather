@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
+import com.aware.ui.PermissionsHandler;
 import com.aware.utils.Aware_Plugin;
 import com.aware.utils.Http;
 import com.google.android.gms.common.ConnectionResult;
@@ -28,6 +29,7 @@ import com.google.android.gms.location.LocationServices;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -54,14 +56,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     private static Intent openWeatherIntent;
     private static PendingIntent openWeatherFetcher;
 
-    /**
-     * Used to dynamically request the needed preferences
-     */
-    public static final String[] REQUIRED_PERMISSIONS = new String[]{
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-    };
-	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -88,8 +82,12 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 			}
 		};
 		sContextProducer = CONTEXT_PRODUCER;
-		
-		DATABASE_TABLES = Provider.DATABASE_TABLES;
+
+        //Permissions needed for our plugin
+        REQUIRED_PERMISSIONS.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        REQUIRED_PERMISSIONS.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        DATABASE_TABLES = Provider.DATABASE_TABLES;
 		TABLES_FIELDS = Provider.TABLES_FIELDS;
 		CONTEXT_URIS = new Uri[]{ OpenWeather_Data.CONTENT_URI };
 
@@ -111,25 +109,18 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+        //Request permissions!
+        super.onStartCommand(intent, flags, startId);
 
-        int location_access = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        int storage_access = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() ) {
+            mGoogleApiClient.connect();
+        }
 
-        if( location_access != PackageManager.PERMISSION_GRANTED || storage_access != PackageManager.PERMISSION_GRANTED ) {
-            Intent permissionRequest = new Intent(this, PermissionHandler.class);
-            permissionRequest.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(permissionRequest);
-        } else {
-            if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() )
-                mGoogleApiClient.connect();
+        TAG = "AWARE::OpenWeather";
+        DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
 
-            TAG = "AWARE::OpenWeather";
-            DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
-
-            if( DEBUG) Log.d(TAG,"Updating weather every " + Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY) + " minute(s)");
-            locationRequest.setInterval( Integer.valueOf(Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY)) * 60 * 1000 ); //in minutes
-
-            if(mGoogleApiClient.isConnected()) {
+        if(mGoogleApiClient.isConnected()) {
+            if( ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
             }
         }
@@ -153,10 +144,14 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     public void onConnected(Bundle bundle) {
         Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if( lastLocation != null ) {
+            if( DEBUG) Log.d(TAG,"Updating weather every " + Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY) + " minute(s)");
+            locationRequest.setInterval( Integer.valueOf(Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY)) * 60 * 1000 ); //in minutes
             openWeatherIntent.putExtra(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED, lastLocation);
             startService(openWeatherIntent);
         }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
+        if( ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
+        }
     }
 
     @Override
@@ -187,10 +182,10 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 			double longitude = location.getLongitude();
 			
 			if( latitude != 0 && longitude != 0 ) {
-				Http httpObj = new Http(this);
-				String server_response = httpObj.dataGET(String.format(OPENWEATHER_API_URL, latitude, longitude, Locale.getDefault().getLanguage(), Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER), Aware.getSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY)), false);
 
-                if( server_response.length() == 0 || server_response.contains("Invalid API key") ) return;
+                Http httpObj = new Http(this);
+				String server_response = httpObj.dataGET(String.format(OPENWEATHER_API_URL, latitude, longitude, Locale.getDefault().getLanguage(), Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER), Aware.getSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY)), false);
+                if( server_response == null || server_response.length() == 0 || server_response.contains("Invalid API key") ) return;
 
                 try {
                     JSONObject raw_data = new JSONObject( server_response );
