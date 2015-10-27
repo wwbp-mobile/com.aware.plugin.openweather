@@ -109,7 +109,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-        //Request permissions!
         super.onStartCommand(intent, flags, startId);
 
         if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() ) {
