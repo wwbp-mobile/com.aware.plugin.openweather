@@ -34,9 +34,9 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
      */
 	public static final String OPENWEATHER_API_KEY = "api_key_plugin_openweather";
 
-	CheckBoxPreference status;
-	ListPreference units;
-	EditTextPreference frequency, openweather_api_key;
+	private static CheckBoxPreference status;
+	private static ListPreference units;
+	private static EditTextPreference frequency, openweather_api_key;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,25 +74,24 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		if( preference.getKey().equals(STATUS_PLUGIN_OPENWEATHER)) {
 			boolean is_active = sharedPreferences.getBoolean(key, false);
 			Aware.setSetting(getApplicationContext(), key, is_active);
-			if( is_active ) {
-				Aware.startPlugin(getApplicationContext(), "com.aware.plugin.openweather");
-			} else {
-				Aware.stopPlugin(getApplicationContext(), "com.aware.plugin.openweather");
-			}
+			status.setChecked(is_active);
 		}
 		if( preference.getKey().equals(UNITS_PLUGIN_OPENWEATHER)) {
 			preference.setSummary(sharedPreferences.getString(key, "metric"));
 			Aware.setSetting(getApplicationContext(), key, sharedPreferences.getString(key, "metric"));
-			Aware.startPlugin(getApplicationContext(), "com.aware.plugin.openweather");
 		}
         if( preference.getKey().equals(PLUGIN_OPENWEATHER_FREQUENCY)) {
             preference.setSummary("Every " + sharedPreferences.getString(key,"30") + " minute(s)");
             Aware.setSetting(getApplicationContext(), key, sharedPreferences.getString(key, "30"));
-			Aware.startPlugin(getApplicationContext(), "com.aware.plugin.openweather");
         }
         if( preference.getKey().equals(OPENWEATHER_API_KEY)) {
             Aware.setSetting(getApplicationContext(), key, sharedPreferences.getString(key, ""));
-            Aware.startPlugin(getApplicationContext(), "com.aware.plugin.openweather");
         }
+
+		if( status.isChecked() ) {
+			Aware.startPlugin(getApplicationContext(), "com.aware.plugin.openweather");
+		} else {
+			Aware.stopPlugin(getApplicationContext(), "com.aware.plugin.openweather");
+		}
 	}
 }

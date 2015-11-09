@@ -53,8 +53,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     private static GoogleApiClient mGoogleApiClient;
 
     private static LocationRequest locationRequest;
-    private static Intent openWeatherIntent;
-    private static PendingIntent openWeatherFetcher;
 
 	@Override
 	public void onCreate() {
@@ -101,16 +99,14 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
         locationRequest.setFastestInterval(1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
 
-        openWeatherIntent = new Intent(this, OpenWeather_Service.class);
-        openWeatherFetcher = PendingIntent.getService(this, 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
+        PendingIntent openWeatherFetcher = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Aware.startPlugin(this, "com.aware.plugin.openweather");
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
-
         if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() ) {
             mGoogleApiClient.connect();
         }
@@ -120,11 +116,13 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
         if(mGoogleApiClient.isConnected()) {
             if( ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+                Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
+                PendingIntent openWeatherFetcher = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
             }
         }
 
-		return START_STICKY;
+		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
@@ -133,6 +131,8 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
         Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_LOCATION_NETWORK, false);
         if( mGoogleApiClient != null ) {
+            Intent openWeatherIntent = new Intent(this, OpenWeather_Service.class);
+            PendingIntent openWeatherFetcher = PendingIntent.getService(this, 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, openWeatherFetcher);
         }
 
@@ -145,10 +145,14 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
         if( lastLocation != null ) {
             if( DEBUG) Log.d(TAG,"Updating weather every " + Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY) + " minute(s)");
             locationRequest.setInterval( Integer.valueOf(Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY)) * 60 * 1000 ); //in minutes
+
+            Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
             openWeatherIntent.putExtra(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED, lastLocation);
             startService(openWeatherIntent);
         }
         if( ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+            Intent openWeatherIntent = new Intent(this, OpenWeather_Service.class);
+            PendingIntent openWeatherFetcher = PendingIntent.getService(this, 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
         }
     }
