@@ -22,6 +22,7 @@ import com.aware.ui.PermissionsHandler;
 import com.aware.utils.Aware_Plugin;
 import com.aware.utils.Http;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -51,7 +52,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 	private static JSONObject sOpenWeather;
 
     private static GoogleApiClient mGoogleApiClient;
-
     private static LocationRequest locationRequest;
 
 	@Override
@@ -99,29 +99,30 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
         locationRequest.setFastestInterval(1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
 
-        Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
-        PendingIntent openWeatherFetcher = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         Aware.startPlugin(this, "com.aware.plugin.openweather");
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-        if( ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() ) {
-            mGoogleApiClient.connect();
-        }
 
         TAG = "AWARE::OpenWeather";
         DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
 
-        if(mGoogleApiClient.isConnected()) {
-            if( ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
-                Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
-                PendingIntent openWeatherFetcher = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
+        if( ! is_google_services_available() ) {
+            Log.e(TAG,"Google Services fused location is not available on this device.");
+            stopSelf();
+        } else {
+            if( mGoogleApiClient != null && ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() ) {
+                mGoogleApiClient.connect();
+            }
+            if(mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+                if( ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+                    Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
+                    PendingIntent openWeatherFetcher = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
+                }
             }
         }
-
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -130,14 +131,21 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 		super.onDestroy();
 
         Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_LOCATION_NETWORK, false);
-        if( mGoogleApiClient != null ) {
+
+        if( mGoogleApiClient != null && mGoogleApiClient.isConnected() ) {
             Intent openWeatherIntent = new Intent(this, OpenWeather_Service.class);
             PendingIntent openWeatherFetcher = PendingIntent.getService(this, 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, openWeatherFetcher);
+
+            mGoogleApiClient.disconnect();
         }
 
         Aware.stopPlugin(this, "com.aware.plugin.openweather");
 	}
+
+    private boolean is_google_services_available() {
+        return (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()));
+    }
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -159,7 +167,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
     @Override
     public void onConnectionSuspended(int i) {
-        if( ! mGoogleApiClient.isConnecting() ) mGoogleApiClient.connect();
+        if( mGoogleApiClient != null && ! mGoogleApiClient.isConnecting() ) mGoogleApiClient.connect();
     }
 
     @Override
