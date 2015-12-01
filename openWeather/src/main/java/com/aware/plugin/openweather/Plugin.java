@@ -130,8 +130,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 	public void onDestroy() {
 		super.onDestroy();
 
-        Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_LOCATION_NETWORK, false);
-
         if( mGoogleApiClient != null && mGoogleApiClient.isConnected() ) {
             Intent openWeatherIntent = new Intent(this, OpenWeather_Service.class);
             PendingIntent openWeatherFetcher = PendingIntent.getService(this, 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
