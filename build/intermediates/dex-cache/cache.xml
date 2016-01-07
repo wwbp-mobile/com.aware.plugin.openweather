@@ -2,88 +2,88 @@
 <items version="2" >
 
     <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.3.0/jars/classes.jar"
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.9.7/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="6d9ed9a288364688e7fcf6704776284dac1eb42e">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-a42869b247d2a479205ec0d1d5cf3b21d944c086.jar" />
+        sha1="609dc358b17fe7f45ce2b886878f270059757183">
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-cd92f7d863037c4d2dd3c2ab93439e3be9e7071e.jar" />
     </item>
     <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.9.5/jars/libs/mqtt-client-0.4.0.jar"
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="02315d1759d01e52495e040e6e538aaa2e91c7f6">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/mqtt-client-0.4.0-88467c861fc7b0f8f1812d1090fa9d242b3f1fd7.jar" />
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-a483bf1956bcd145299bb00d5908f40e5c816de4.jar" />
     </item>
     <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-a0a208c716a4483300d09bf95d3f12c6bfd252e2.jar" />
-    </item>
-    <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-9cf92d1ea9ba86d2991aebe707ea2da5a3a6abd1.jar" />
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-e8e6c598f6b0fd60b0d5dc15439100867c8b8ca1.jar" />
     </item>
     <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/jars/classes.jar"
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="345a1b5cf5b144ce18ba6962bc66a7e2f26c1c1b">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-ffd2bbbc976863e5fcf05337174431fe1ae5be68.jar" />
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-44bd6371fa705272566decf0d5c5827a46bd3b4b.jar" />
     </item>
     <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.3.0/jars/classes.jar"
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="77f9593d979f4347344be233bd0d888315f79517">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-894aed041821a349db7a6d2a5db9f10f5bd29a64.jar" />
-    </item>
-    <item
-        jar="/Users/denzil/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/support-annotations-23.1.1-61ab341b55ebce30ce3c7279efc561bc28566263.jar" />
-    </item>
-    <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="01a90bbb9495a8bbf6f3cfdf12f1b35caaa9524b">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-227f843798f6a42943ee1afd8f1a0878db012c2e.jar" />
-    </item>
-    <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/internal_impl-23.1.1-25e756a8cbc34da71aa25852deaa49ea1b750312.jar" />
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-e819f6324174e5247bf71557934b3fb7bae7cebc.jar" />
     </item>
     <item
         jar="/Users/denzil/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v2.1.3/3fce86548feba9dd220128fa651498c51d099cd8/MPAndroidChart-v2.1.3.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="3fce86548feba9dd220128fa651498c51d099cd8">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/MPAndroidChart-v2.1.3-79c6229f1583c078c7c779a6e3749d9c443f18a0.jar" />
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/MPAndroidChart-v2.1.3-79c6229f1583c078c7c779a6e3749d9c443f18a0.jar" />
     </item>
     <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.9.7/jars/libs/mqtt-client-0.4.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="02315d1759d01e52495e040e6e538aaa2e91c7f6">
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/mqtt-client-0.4.0-c5fdfee21aa8ab6e58cfb18808f2d3dad3876286.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="5c5699834e9722f1c288fea2de82725d078ba127">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-91e12974b789a9217e8f0256e77c2da79dae7d8a.jar" />
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-1000d06e1b3291b7e3abcc72a049f70867bf3af7.jar" />
     </item>
     <item
-        jar="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.9.5/jars/classes.jar"
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="891aa1e42227dfd8f9682c3ac842030bf056cfd9">
-        <dex dex="/Users/denzil/Android/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-fd6ef784219472a8489c1b54c13450a6239be33a.jar" />
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-52af912ddae93dfaf609ab2b940bed9343dbc149.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/internal_impl-23.1.1-8ab67ff05719d57cc4d2fe9c3f5e99f4740e588a.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/support-annotations-23.1.1-91b348db28c2471b8cebc5765a989736344f5b3b.jar" />
+    </item>
+    <item
+        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-0b42912d5e3f3d6c10780a6528a437f7cee06769.jar" />
     </item>
 
 </items>
