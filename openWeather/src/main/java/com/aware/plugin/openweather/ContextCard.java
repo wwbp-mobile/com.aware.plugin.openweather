@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
-import com.aware.ui.Stream_UI;
+
 import com.aware.utils.IContextCard;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -131,11 +131,13 @@ public class ContextCard implements IContextCard {
 		sContext = context;
         sInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        /*
         //Tell Android that you'll monitor the stream statuses
         IntentFilter filter = new IntentFilter();
         filter.addAction(Stream_UI.ACTION_AWARE_STREAM_OPEN);
         filter.addAction(Stream_UI.ACTION_AWARE_STREAM_CLOSED);
         context.registerReceiver(streamObs, filter);
+        */
 
         card = sInflater.inflate(R.layout.layout, null);
 		
@@ -226,6 +228,7 @@ public class ContextCard implements IContextCard {
     public class StreamObs extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            /*
             if( intent.getAction().equals(Stream_UI.ACTION_AWARE_STREAM_OPEN) ) {
                 //start refreshing when user enters the stream
                 uiRefresher.post(uiChanger);
@@ -235,6 +238,7 @@ public class ContextCard implements IContextCard {
                 uiRefresher.removeCallbacks(uiChanger);
                 uiRefresher.removeCallbacksAndMessages(null);
             }
+            */
         }
     }
 }

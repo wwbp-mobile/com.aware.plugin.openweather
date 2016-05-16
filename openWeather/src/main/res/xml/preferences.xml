@@ -3,9 +3,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.aware.ui.Aware_Toolbar android:title="@string/app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <CheckBoxPreference android:title="Active" android:key="status_plugin_openweather" android:summary="Local weather conditions, from OpenWeather." android:persistent="true" android:defaultValue="false"
         android:layout_width="wrap_content"

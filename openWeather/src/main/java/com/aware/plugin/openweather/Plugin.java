@@ -5,10 +5,12 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ServiceCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -100,6 +102,9 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
         locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
 
         Aware.startPlugin(this, "com.aware.plugin.openweather");
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getString(Settings.OPENWEATHER_API_KEY, "").length() < 1) { Toast.makeText(this, "Insert your openweathermap.org API key in Plugin Settings", Toast.LENGTH_LONG).show();}
 	}
 
 	@Override
