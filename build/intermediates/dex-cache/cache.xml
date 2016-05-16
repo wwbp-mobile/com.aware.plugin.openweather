@@ -2,88 +2,263 @@
 <items version="2" >
 
     <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.9.7/jars/classes.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.4.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="609dc358b17fe7f45ce2b886878f270059757183">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-cd92f7d863037c4d2dd3c2ab93439e3be9e7071e.jar" />
+        revision="23.0.3"
+        sha1="9cad249cf62751a323d9af568caf12284b7d6062">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-nearby-8.4.0_f93936b829dcaf11f81e5262abe87f2820a75fdf.jar" />
     </item>
     <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
+        jar="/Users/aku/.gradle/caches/modules-2/files-2.1/org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.0.2/11752d3f24d1a9deda4533a7ca18d8496417ceeb/org.eclipse.paho.client.mqttv3-1.0.2.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="04de44f90606c77f3b28cf44861f306290505aac">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-a483bf1956bcd145299bb00d5908f40e5c816de4.jar" />
+        revision="23.0.3"
+        sha1="11752d3f24d1a9deda4533a7ca18d8496417ceeb">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/org.eclipse.paho.client.mqttv3-1.0.2_c2270017f2bef3a803152e9a45b67ab6a989d377.jar" />
     </item>
     <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/8.4.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-e8e6c598f6b0fd60b0d5dc15439100867c8b8ca1.jar" />
+        revision="23.0.3"
+        sha1="0194a7409c40de94fb539d4ad9928ec5d47afeb7">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-safetynet-8.4.0_5336d6fc5c711af95682f8e9af3158de5cf36206.jar" />
     </item>
     <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.1/jars/classes.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/8.4.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-44bd6371fa705272566decf0d5c5827a46bd3b4b.jar" />
+        revision="23.0.3"
+        sha1="c54246475c1bb64ac6857d1320364bfbfeda2c46">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-fitness-8.4.0_d723716e7e38d1f2c9726f89f60f73cb48fa9050.jar" />
     </item>
     <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.4.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-e819f6324174e5247bf71557934b3fb7bae7cebc.jar" />
+        revision="23.0.3"
+        sha1="1c9f35e952b212c843f7bd2c7eec8e82ad95602e">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-analytics-8.4.0_4cb8b405e530b1dae359a6461a7cdcb27438f058.jar" />
     </item>
     <item
-        jar="/Users/denzil/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v2.1.3/3fce86548feba9dd220128fa651498c51d099cd8/MPAndroidChart-v2.1.3.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.4.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="3fce86548feba9dd220128fa651498c51d099cd8">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/MPAndroidChart-v2.1.3-79c6229f1583c078c7c779a6e3749d9c443f18a0.jar" />
+        revision="23.0.3"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appindexing-8.4.0_3377aa1864206271142619d6c869896607a83de0.jar" />
     </item>
     <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/3.9.7/jars/libs/mqtt-client-0.4.0.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.4.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="02315d1759d01e52495e040e6e538aaa2e91c7f6">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/mqtt-client-0.4.0-c5fdfee21aa8ab6e58cfb18808f2d3dad3876286.jar" />
+        revision="23.0.3"
+        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-8.4.0_fb8b2befdebb342b3191dd6c7b8ec50447798855.jar" />
     </item>
     <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.4.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-1000d06e1b3291b7e3abcc72a049f70867bf3af7.jar" />
+        revision="23.0.3"
+        sha1="9fe026fb4c7fce21bc5142f6e1bdf844f28061ac">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appinvite-8.4.0_6b287b46d22c5f5bda42d5ebfdec738ad6968452.jar" />
     </item>
     <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/jars/classes.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-52af912ddae93dfaf609ab2b940bed9343dbc149.jar" />
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.3.0_bb42d7ca39a7ee5c1e9080b216086b35bfba866d.jar" />
     </item>
     <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.4.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/internal_impl-23.1.1-8ab67ff05719d57cc4d2fe9c3f5e99f4740e588a.jar" />
+        revision="23.0.3"
+        sha1="b5e7892fb0708e792e0e933c4c0a0ca0ac7831fb">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-ads-8.4.0_a4bb9b21e925af048d56b19a8836f70e8ae63824.jar" />
     </item>
     <item
-        jar="/Users/denzil/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/support-annotations-23.1.1-91b348db28c2471b8cebc5765a989736344f5b3b.jar" />
-    </item>
-    <item
-        jar="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
+        revision="23.0.3"
         sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
-        <dex dex="/Users/denzil/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/release/classes-0b42912d5e3f3d6c10780a6528a437f7cee06769.jar" />
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-8.4.0_2f5794e08b90707417504d6e4609523ae44ee9b0.jar" />
+    </item>
+    <item
+        jar="/Users/aku/.gradle/caches/modules-2/files-2.1/com.koushikdutta.ion/ion/2.1.6/cd55ef3ba6d8b62838b658ba2507b019dffb3a08/ion-2.1.6.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="cd55ef3ba6d8b62838b658ba2507b019dffb3a08">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/ion-2.1.6_5337d78bfb8299363eb76e0deaa1f8428a4e73ba.jar" />
+    </item>
+    <item
+        jar="/Users/aku/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/gson-2.3_005fc07f8b2a3e900bdeabd11c369e9a34311c31.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.awareframework/aware-core/4.0.559/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="284696b9c18ca893360f05ed4552e1023df6ab96">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.awareframework-aware-core-4.0.559_3ed4ad03d1c33ce16071da8c6ef20b9b3ab1177e.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="d358b3dd49a7c67844622dcbc9cf4339e13952ce">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.android.support-mediarouter-v7-23.0.0_25e2209f7cc220377c8824f0e6bdca263d61880a.jar" />
+    </item>
+    <item
+        jar="/Users/aku/.gradle/caches/modules-2/files-2.1/com.koushikdutta.async/androidasync/2.1.6/e3d5f6ab2003e31f2cf5ea61b4731a21e9517935/androidasync-2.1.6.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="e3d5f6ab2003e31f2cf5ea61b4731a21e9517935">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/androidasync-2.1.6_24c2f948d33f6f59c5318b13b8e8d3d440154985.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.3.0_3aa991b2e84d43a291bdf2daa569da5d8071ded2.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="1a78298e7724d5440d210bcb946b3493250d354d">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-8.4.0_1f6a2d40d13c14335bbe6fe09acebea05ab0ec2e.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="b36f30ac5ee5d5214f4b1e2ac49f11889d58e71a">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-drive-8.4.0_832d2a91e6a7ec05639a3f8643c0125768038cc8.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wearable-8.4.0_8113ce37bef057735804d1fa0e451ef8fd38a05c.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="966e5771a5a2ebfb31bf00d7cd6cd2546d245517">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-auth-8.4.0_e2269e75aa56f22be025dd7dfc69dab4e60ceac1.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.3.0_9aa99df3415c53adec8301ccf38b8b5cad651caf.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="3a364cc6b698d1b3b2d284f64618daaa7fe77ddf">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-games-8.4.0_249a2869852cb929c219604f1a7b83a001fe8dbf.jar" />
+    </item>
+    <item
+        jar="/Users/aku/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v2.2.4/7abd1ecef320da6a7679b137083151401fe8bf43/MPAndroidChart-v2.2.4.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="7abd1ecef320da6a7679b137083151401fe8bf43">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/MPAndroidChart-v2.2.4_ff25a2b0d3897a63a806795788836dd7213956e5.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-8.4.0_91aca45f5d60ed7d2473431ae16bac06a4494f92.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/libs/internal_impl-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="03d38bb042efe3e5ce27ba66b729a9523c36d8fe">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/internal_impl-23.0.0_93ac4537584e1f063a6740f09809564d28676a6d.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="f2df436a8f02ce7e4d7d209671fc45f97c470f0e">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wallet-8.4.0_b4de3a0eaff0f0520ddbf86209bb02dbc8a8fa5f.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="551e78f21acf69ebfb489c0e79647824c838013e">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-cast-8.4.0_63b2293c373bd423c2d45e37f83d67b7df5bf905.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="08d34b2d135c1cc96ab506fd8bf6916d1e2f391a">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-panorama-8.4.0_59b9cc50b599958e6425fe132eef341572ca6f51.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/internal_impl-23.3.0_487607ffb646eea91954dfb07611b60f4426608b.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-measurement-8.4.0_3bbcfc14b8252dc3bb2f47a4cdf9c9f5aefb8eaa.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-location-8.4.0_9e7853e99ffc16b5db5ce08596df9c8186262419.jar" />
+    </item>
+    <item
+        jar="/Users/aku/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/support-annotations-23.3.0_f6dd6897769f457c0ca0628b176ddbbcb024b2d3.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-identity-8.4.0_1600f0fd2b29f94ccbcdaeca3bb5d307309eb071.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="dfecc4d835cdabcdecf7e95f0d20a3ef1e9d8ef4">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-vision-8.4.0_1653fe63eb7cd115e81a198ee89967f668662c1a.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.3.0_ff074ff51058cc2cfbe84ca9fcccb0bc93539fc9.jar" />
+    </item>
+    <item
+        jar="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="/Users/aku/AndroidStudioProjects/com.aware.plugin.openweather/openWeather/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-maps-8.4.0_aeee1a971382d21de63d78ab7012c19f7160f2b6.jar" />
     </item>
 
 </items>
