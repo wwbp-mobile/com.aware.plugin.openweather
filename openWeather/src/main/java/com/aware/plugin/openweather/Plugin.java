@@ -24,6 +24,7 @@ import com.aware.ui.PermissionsHandler;
 import com.aware.utils.Aware_Plugin;
 import com.aware.utils.Http;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -34,262 +35,157 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Set;
 
 public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-	
-	/**
-	 * Shared context: new OpenWeather data is available
-	 */
-	public static final String ACTION_AWARE_PLUGIN_OPENWEATHER = "ACTION_AWARE_PLUGIN_OPENWEATHER";
-	
-	/**
-	 * Extra string: openweather<br/>
-	 * JSONObject from OpenWeather<br/>
-	 * http://bugs.openweathermap.org/projects/api/wiki/Weather_Data
-	 */
-	public static final String EXTRA_OPENWEATHER = "openweather";
-	
-	private static final String OPENWEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&units=%s&appid=%s";
-	private static ContextProducer sContextProducer;
-	private static JSONObject sOpenWeather;
+
+    /**
+     * Shared context: new OpenWeather data is available
+     */
+    public static final String ACTION_AWARE_PLUGIN_OPENWEATHER = "ACTION_AWARE_PLUGIN_OPENWEATHER";
+
+    /**
+     * Extra string: openweather<br/>
+     * JSONObject from OpenWeather<br/>
+     */
+    public static final String EXTRA_OPENWEATHER = "openweather";
+
+    public static ContextProducer sContextProducer;
+    public static ContentValues sOpenWeather;
 
     private static GoogleApiClient mGoogleApiClient;
-    private static LocationRequest locationRequest;
+    private final static LocationRequest locationRequest = new LocationRequest();
+    private static PendingIntent pIntent;
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-        if( Aware.getSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER).length() == 0 ) {
-            Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, true);
-        }
-		if( Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER).length() == 0 ) {
-			Aware.setSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER, "metric");
-		}
-        if( Aware.getSetting(getApplicationContext(), Settings.PLUGIN_OPENWEATHER_FREQUENCY).length() == 0 ) {
-            Aware.setSetting(getApplicationContext(), Settings.PLUGIN_OPENWEATHER_FREQUENCY, 30);
-        }
-        if( Aware.getSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY).length() == 0 ) {
-            Aware.setSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY, "");
-        }
+        TAG = "AWARE: OpenWeather";
 
-		CONTEXT_PRODUCER = new ContextProducer() {
-			@Override
-			public void onContext() {
-				Intent mOpenWeather = new Intent(ACTION_AWARE_PLUGIN_OPENWEATHER);
-				mOpenWeather.putExtra(EXTRA_OPENWEATHER, sOpenWeather.toString());
-				sendBroadcast(mOpenWeather);
-			}
-		};
-		sContextProducer = CONTEXT_PRODUCER;
+        DATABASE_TABLES = Provider.DATABASE_TABLES;
+        TABLES_FIELDS = Provider.TABLES_FIELDS;
+        CONTEXT_URIS = new Uri[]{OpenWeather_Data.CONTENT_URI};
+
+        CONTEXT_PRODUCER = new ContextProducer() {
+            @Override
+            public void onContext() {
+                Intent mOpenWeather = new Intent(ACTION_AWARE_PLUGIN_OPENWEATHER);
+                mOpenWeather.putExtra(EXTRA_OPENWEATHER, sOpenWeather);
+                sendBroadcast(mOpenWeather);
+            }
+        };
+        sContextProducer = CONTEXT_PRODUCER;
 
         //Permissions needed for our plugin
         REQUIRED_PERMISSIONS.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-        REQUIRED_PERMISSIONS.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        DATABASE_TABLES = Provider.DATABASE_TABLES;
-		TABLES_FIELDS = Provider.TABLES_FIELDS;
-		CONTEXT_URIS = new Uri[]{ OpenWeather_Data.CONTENT_URI };
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApiIfAvailable(LocationServices.API)
-                .build();
-
-        locationRequest = new LocationRequest();
-        locationRequest.setFastestInterval(1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
-
-        Aware.startPlugin(this, "com.aware.plugin.openweather");
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefs.getString(Settings.OPENWEATHER_API_KEY, "").length() < 1) { Toast.makeText(this, "Insert your openweathermap.org API key in Plugin Settings", Toast.LENGTH_LONG).show();}
-	}
-
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-
-        TAG = "AWARE::OpenWeather";
-        DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
-
-        if( ! is_google_services_available() ) {
-            Log.e(TAG,"Google Services fused location is not available on this device.");
-            stopSelf();
+        if (!is_google_services_available()) {
+            if (DEBUG)
+                Log.e(TAG, "Google Services Fused location are not available on this device");
         } else {
-            if( mGoogleApiClient != null && ! mGoogleApiClient.isConnecting() && ! mGoogleApiClient.isConnected() ) {
-                mGoogleApiClient.connect();
-            }
-            if(mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-                if( ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
-                    Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
-                    PendingIntent openWeatherFetcher = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
-                }
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApiIfAvailable(LocationServices.API)
+                    .build();
+
+            Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
+            pIntent = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            Aware.startPlugin(this, "com.aware.plugin.openweather");
+        }
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        boolean permissions_ok = true;
+        for (String p : REQUIRED_PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
+                permissions_ok = false;
+                break;
             }
         }
-		return super.onStartCommand(intent, flags, startId);
-	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
+        if (permissions_ok) {
+            DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
 
-        if( mGoogleApiClient != null && mGoogleApiClient.isConnected() ) {
-            Intent openWeatherIntent = new Intent(this, OpenWeather_Service.class);
-            PendingIntent openWeatherFetcher = PendingIntent.getService(this, 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, openWeatherFetcher);
+            Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, true);
+            if (Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER).length() == 0)
+                Aware.setSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER, "metric");
 
+            if (Aware.getSetting(getApplicationContext(), Settings.PLUGIN_OPENWEATHER_FREQUENCY).length() == 0)
+                Aware.setSetting(getApplicationContext(), Settings.PLUGIN_OPENWEATHER_FREQUENCY, 60);
+
+            if (Aware.getSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY).length() == 0)
+                Aware.setSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY, "ada11fb870974565377df238f3046aa9");
+
+            if (mGoogleApiClient != null && !mGoogleApiClient.isConnected())
+                mGoogleApiClient.connect();
+
+        } else {
+            Intent permissions = new Intent(this, PermissionsHandler.class);
+            permissions.putExtra(PermissionsHandler.EXTRA_REQUIRED_PERMISSIONS, REQUIRED_PERMISSIONS);
+            permissions.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(permissions);
+        }
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, false);
+
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, pIntent);
             mGoogleApiClient.disconnect();
         }
 
         Aware.stopPlugin(this, "com.aware.plugin.openweather");
-	}
+        Aware.stopAWARE();
+    }
 
     private boolean is_google_services_available() {
-        return (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()));
+        GoogleApiAvailability googleApi = GoogleApiAvailability.getInstance();
+        int result = googleApi.isGooglePlayServicesAvailable(this);
+        return (result == ConnectionResult.SUCCESS);
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if( lastLocation != null ) {
-            if( DEBUG) Log.d(TAG,"Updating weather every " + Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY) + " minute(s)");
-            locationRequest.setInterval( Integer.valueOf(Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY)) * 60 * 1000 ); //in minutes
+        if (DEBUG)
+            Log.i(TAG, "Connected to Google Fused Location API");
 
-            Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
-            openWeatherIntent.putExtra(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED, lastLocation);
-            startService(openWeatherIntent);
-        }
-        if( ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
-            Intent openWeatherIntent = new Intent(this, OpenWeather_Service.class);
-            PendingIntent openWeatherFetcher = PendingIntent.getService(this, 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, openWeatherFetcher );
+        locationRequest.setInterval(Long.parseLong(Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY)) * 60 * 1000);
+        locationRequest.setFastestInterval(Long.parseLong(Aware.getSetting(this, Settings.PLUGIN_OPENWEATHER_FREQUENCY)) * 60 * 1000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
+
+        try {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, pIntent);
+            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (lastLocation != null) {
+                Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
+                openWeatherIntent.putExtra(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED, lastLocation);
+                startService(openWeatherIntent);
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        if( mGoogleApiClient != null && ! mGoogleApiClient.isConnecting() ) mGoogleApiClient.connect();
+        if (DEBUG)
+            Log.w(TAG, "Error connecting to Google Fused Location services, will try again in 5 minutes");
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        if( connectionResult.getErrorCode() == ConnectionResult.API_UNAVAILABLE ) stopSelf();
+        if (DEBUG)
+            Log.w(TAG, "Error connecting to Google Fused Location services, will try again in 5 minutes");
     }
-
-    /**
-	 * Background service that will connect to OpenWeather API and fetch and store current weather conditions depending on the user's location
-	 * @author dferreira
-	 */
-	public static class OpenWeather_Service extends IntentService {
-		public OpenWeather_Service() {
-			super("AWARE OpenWeather");
-		}
-
-		@Override
-		protected void onHandleIntent(Intent intent) {
-            Location location = (Location) intent.getExtras().get(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED);
-            if( location == null ) return;
-
-			double latitude = location.getLatitude();
-			double longitude = location.getLongitude();
-			
-			if( latitude != 0 && longitude != 0 ) {
-
-                Http httpObj = new Http(this);
-				String server_response = httpObj.dataGET(String.format(OPENWEATHER_API_URL, latitude, longitude, Locale.getDefault().getLanguage(), Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER), Aware.getSetting(getApplicationContext(), Settings.OPENWEATHER_API_KEY)), false);
-                if( server_response == null || server_response.length() == 0 || server_response.contains("Invalid API key") ) return;
-
-                try {
-                    JSONObject raw_data = new JSONObject( server_response );
-
-                    if( DEBUG ) Log.d(Plugin.TAG,"OpenWeather answer: " + raw_data.toString(5));
-
-                    JSONObject wind = raw_data.getJSONObject("wind");
-                    JSONObject weather_characteristics = raw_data.getJSONObject("main");
-                    JSONObject weather = raw_data.getJSONArray("weather").getJSONObject(0);
-                    JSONObject clouds = raw_data.getJSONObject("clouds");
-
-                    JSONObject rain = null;
-                    if( raw_data.opt("rain") != null ) {
-                        rain = raw_data.optJSONObject("rain");
-                    }
-                    JSONObject snow = null;
-                    if( raw_data.opt("snow") != null ) {
-                        snow = raw_data.optJSONObject("snow");
-                    }
-                    JSONObject sys = raw_data.getJSONObject("sys");
-
-                    ContentValues weather_data = new ContentValues();
-                    weather_data.put(OpenWeather_Data.TIMESTAMP, System.currentTimeMillis());
-                    weather_data.put(OpenWeather_Data.DEVICE_ID, Aware.getSetting(getApplicationContext(), Aware_Preferences.DEVICE_ID));
-                    weather_data.put(OpenWeather_Data.CITY, raw_data.getString("name"));
-                    weather_data.put(OpenWeather_Data.TEMPERATURE, weather_characteristics.getDouble("temp"));
-                    weather_data.put(OpenWeather_Data.TEMPERATURE_MAX, weather_characteristics.getDouble("temp_max"));
-                    weather_data.put(OpenWeather_Data.TEMPERATURE_MIN, weather_characteristics.getDouble("temp_min"));
-                    weather_data.put(OpenWeather_Data.UNITS, Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER));
-                    weather_data.put(OpenWeather_Data.HUMIDITY, weather_characteristics.getDouble("humidity"));
-                    weather_data.put(OpenWeather_Data.PRESSURE, weather_characteristics.getDouble("pressure"));
-                    weather_data.put(OpenWeather_Data.WIND_SPEED, wind.getDouble("speed"));
-                    weather_data.put(OpenWeather_Data.WIND_DEGREES, wind.getDouble("deg"));
-                    weather_data.put(OpenWeather_Data.CLOUDINESS, clouds.getDouble("all"));
-
-                    double rain_value = 0;
-                    if( rain != null ) {
-                        if (rain.opt("1h") != null) {
-                            rain_value = rain.optDouble("1h", 0);
-                        } else if (rain.opt("3h") != null) {
-                            rain_value = rain.optDouble("3h", 0);
-                        } else if (rain.opt("6h") != null) {
-                            rain_value = rain.optDouble("6h", 0);
-                        } else if (rain.opt("12h") != null) {
-                            rain_value = rain.optDouble("12h", 0);
-                        } else if (rain.opt("24h") != null) {
-                            rain_value = rain.optDouble("24h", 0);
-                        } else if (rain.opt("day") != null) {
-                            rain_value = rain.optDouble("day", 0);
-                        }
-                    }
-
-                    double snow_value = 0;
-                    if( snow != null ) {
-                        if (snow.opt("1h") != null) {
-                            snow_value = snow.optDouble("1h", 0);
-                        } else if (snow.opt("3h") != null) {
-                            snow_value = snow.optDouble("3h", 0);
-                        } else if (snow.opt("6h") != null) {
-                            snow_value = snow.optDouble("6h", 0);
-                        } else if (snow.opt("12h") != null) {
-                            snow_value = snow.optDouble("12h", 0);
-                        } else if (snow.opt("24h") != null) {
-                            snow_value = snow.optDouble("24h", 0);
-                        } else if (snow.opt("day") != null) {
-                            snow_value = snow.optDouble("day", 0);
-                        }
-                    }
-                    weather_data.put(OpenWeather_Data.RAIN, rain_value);
-                    weather_data.put(OpenWeather_Data.SNOW, snow_value);
-                    weather_data.put(OpenWeather_Data.SUNRISE, sys.getDouble("sunrise"));
-                    weather_data.put(OpenWeather_Data.SUNSET, sys.getDouble("sunset"));
-                    weather_data.put(OpenWeather_Data.WEATHER_ICON_ID, weather.getInt("id"));
-                    weather_data.put(OpenWeather_Data.WEATHER_DESCRIPTION, weather.getString("main") + ": "+weather.getString("description"));
-
-                    getContentResolver().insert(OpenWeather_Data.CONTENT_URI, weather_data);
-
-                    sOpenWeather = raw_data;
-
-                    sContextProducer.onContext();
-
-                    if( DEBUG) Log.d(TAG, weather_data.toString());
-
-                } catch (JSONException e) {
-                    if( DEBUG ) Log.d(TAG,"Error reading JSON: " + e.getMessage());
-                } catch( NullPointerException e ) {
-                    if( DEBUG ) Log.d(TAG,"Failed to parse JSON from server:");
-                    e.printStackTrace();
-                }
-			}
-		}
-	}
 }

@@ -351,11 +351,11 @@
             android:textSize="10dp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/weather_plot"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/temp_plot"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_below="@+id/snow_wrapper"
         android:layout_centerHorizontal="true" />
 
