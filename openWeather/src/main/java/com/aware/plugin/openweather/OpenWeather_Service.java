@@ -125,7 +125,8 @@ public class OpenWeather_Service extends IntentService {
                 getContentResolver().insert(Provider.OpenWeather_Data.CONTENT_URI, weather_data);
 
                 Plugin.sOpenWeather = weather_data;
-                Plugin.sContextProducer.onContext();
+                if (Plugin.sContextProducer != null)
+                    Plugin.sContextProducer.onContext();
 
                 if (Plugin.DEBUG) Log.d(Plugin.TAG, weather_data.toString());
 
