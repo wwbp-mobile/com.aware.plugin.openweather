@@ -1,20 +1,19 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 
 version = version_readable
 group = "com.awareframework"
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
-        applicationId "com.aware.plugin.openweather"
+
         minSdkVersion 10
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode version_code
         versionName version_readable
-        multiDexEnabled true
     }
 
     signingConfigs {
@@ -38,11 +37,6 @@ android {
     lintOptions {
         abortOnError false
     }
-
-    dexOptions {
-        incremental true
-        javaMaxHeapSize "4g"
-    }
 }
 
 bintray {
@@ -55,7 +49,7 @@ bintray {
 
     pkg {
         repo = 'com.awareframework'
-        name = android.defaultConfig.applicationId
+        name = "com.aware.plugin.openweather"
         licenses = ['Apache-2.0']
         websiteUrl = 'https://github.com/denzilferreira/com.aware.plugin.openweather'
         issueTrackerUrl = 'https://github.com/denzilferreira/com.aware.plugin.openweather/issues'
@@ -75,17 +69,44 @@ bintray {
     }
 }
 
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task generateJavadocs(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task generateJavadocsJar(type: Jar) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+
+generateJavadocsJar.dependsOn generateJavadocs
+
+artifacts {
+    archives generateJavadocsJar
+    archives generateSourcesJar
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 repositories {
-    maven { url "https://jitpack.io" } //MPAndroidChart
+    maven { url "https://jitpack.io" } //AWARE development
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:multidex:1.0.1'
     compile "com.android.support:appcompat-v7:${support_libs}"
-    compile "com.awareframework:aware-core:${aware_libs}@aar"
+//    compile "com.awareframework:aware-core:${aware_libs}@aar"
+    compile 'com.github.denzilferreira:aware-client:development-SNAPSHOT'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     compile 'com.koushikdutta.ion:ion:2.1.6'
     compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2'
-    compile "com.google.android.gms:play-services:${google_libs}"
+    compile "com.google.android.gms:play-services-location:${google_libs}"
 }
