@@ -63,13 +63,32 @@ public class ContextCard implements IContextCard {
 
         LineChart weather_plot = (LineChart) card.findViewById(R.id.temp_plot);
 
-        Calendar cal = Calendar.getInstance(Locale.getDefault());
-        cal.setTimeInMillis(System.currentTimeMillis());
-        int current_hour = cal.get(Calendar.HOUR_OF_DAY);
-        boolean is_daytime = ( current_hour >= 8 && current_hour <= 18 );
-
         Cursor latest_weather = context.getContentResolver().query( OpenWeather_Data.CONTENT_URI, null, null, null, OpenWeather_Data.TIMESTAMP + " DESC LIMIT 1" );
         if( latest_weather != null && latest_weather.moveToFirst() ) {
+            weather_city.setText(latest_weather.getString(latest_weather.getColumnIndex(OpenWeather_Data.CITY)));
+            weather_description.setText(latest_weather.getString(latest_weather.getColumnIndex(OpenWeather_Data.WEATHER_DESCRIPTION)));
+            weather_temperature.setText(String.format("%.1f",latest_weather.getDouble(latest_weather.getColumnIndex(OpenWeather_Data.TEMPERATURE))) + "º");
+            weather_min_temp.setText(context.getResources().getString(R.string.label_minimum) + String.format(" %.1f",latest_weather.getDouble(latest_weather.getColumnIndex(OpenWeather_Data.TEMPERATURE_MIN))));
+            weather_max_temp.setText(context.getResources().getString(R.string.label_maximum) + String.format(" %.1f",latest_weather.getDouble(latest_weather.getColumnIndex(OpenWeather_Data.TEMPERATURE_MAX))));
+            weather_pressure.setText(latest_weather.getDouble(latest_weather.getColumnIndex(OpenWeather_Data.PRESSURE))+ " hPa");
+            weather_humidity.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.HUMIDITY)) + " %");
+            weather_cloudiness.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.CLOUDINESS)) + " %");
+            weather_wind.setText(latest_weather.getFloat(latest_weather.getColumnIndex(OpenWeather_Data.WIND_SPEED)) + " m/s");
+            weather_wind_degrees.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.WIND_DEGREES)) + "º");
+            weather_rain.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.RAIN)) + " mm");
+            weather_snow.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.SNOW)) + " mm");
+            sunrise.setText(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.SUNRISE)) * 1000L)));
+            sunset.setText(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.SUNSET)) * 1000L)));
+
+            Calendar cal = Calendar.getInstance(Locale.getDefault());
+            cal.setTimeInMillis(System.currentTimeMillis());
+            int current_hour = cal.get(Calendar.HOUR_OF_DAY);
+            boolean is_daytime = (
+                    current_hour >= Integer.valueOf(new SimpleDateFormat("H", Locale.getDefault()).format(new Date(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.SUNRISE)) * 1000L)))
+                    &&
+                    current_hour <= Integer.valueOf(new SimpleDateFormat("H", Locale.getDefault()).format(new Date(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.SUNSET)) * 1000L)))
+            );
+
             int weather_id = latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.WEATHER_ICON_ID));
             if( weather_id >= 200 && weather_id <= 232 ) {
                 weather_icon.setImageResource(R.drawable.ic_weather_thunderstorm);
@@ -96,20 +115,6 @@ public class ContextCard implements IContextCard {
                     weather_icon.setImageResource(R.drawable.ic_weather_clear_night);
                 }
             }
-            weather_city.setText(latest_weather.getString(latest_weather.getColumnIndex(OpenWeather_Data.CITY)));
-            weather_description.setText(latest_weather.getString(latest_weather.getColumnIndex(OpenWeather_Data.WEATHER_DESCRIPTION)));
-            weather_temperature.setText(String.format("%.1f",latest_weather.getDouble(latest_weather.getColumnIndex(OpenWeather_Data.TEMPERATURE))) + "º");
-            weather_min_temp.setText(context.getResources().getString(R.string.label_minimum) + String.format(" %.1f",latest_weather.getDouble(latest_weather.getColumnIndex(OpenWeather_Data.TEMPERATURE_MIN))));
-            weather_max_temp.setText(context.getResources().getString(R.string.label_maximum) + String.format(" %.1f",latest_weather.getDouble(latest_weather.getColumnIndex(OpenWeather_Data.TEMPERATURE_MAX))));
-            weather_pressure.setText(latest_weather.getDouble(latest_weather.getColumnIndex(OpenWeather_Data.PRESSURE))+ " hPa");
-            weather_humidity.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.HUMIDITY)) + " %");
-            weather_cloudiness.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.CLOUDINESS)) + " %");
-            weather_wind.setText(latest_weather.getFloat(latest_weather.getColumnIndex(OpenWeather_Data.WIND_SPEED)) + " m/s");
-            weather_wind_degrees.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.WIND_DEGREES)) + "º");
-            weather_rain.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.RAIN)) + " mm");
-            weather_snow.setText(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.SNOW)) + " mm");
-            sunrise.setText(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.SUNRISE)) * 1000L)));
-            sunset.setText(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(latest_weather.getInt(latest_weather.getColumnIndex(OpenWeather_Data.SUNSET)) * 1000L)));
         }
         if( latest_weather != null && ! latest_weather.isClosed() ) latest_weather.close();
 
