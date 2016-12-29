@@ -3,6 +3,8 @@ package com.aware.plugin.openweather;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class ContextCard implements IContextCard {
 
@@ -120,19 +123,12 @@ public class ContextCard implements IContextCard {
         //Get today's time from the beginning in milliseconds
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(System.currentTimeMillis());
-
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
 
-        ArrayList<String> x_hours = new ArrayList<>();
-        for(int i=0; i<24; i++) {
-            x_hours.add(String.valueOf(i));
-        }
-
         ArrayList<Entry> entries = new ArrayList<>();
-        //add frequencies to the right hour buffer
         Cursor weatherData = context.getContentResolver().query(OpenWeather_Data.CONTENT_URI,
                 new String[]{
                         OpenWeather_Data.TIMESTAMP,
@@ -155,6 +151,7 @@ public class ContextCard implements IContextCard {
 
         LineData data = new LineData(dataSet);
 
+        mChart.getDescription().setEnabled(false);
         mChart.setData(data);
         mChart.invalidate(); //refresh
 
@@ -170,6 +167,9 @@ public class ContextCard implements IContextCard {
         left.setDrawLabels(true);
         left.setDrawGridLines(false);
         left.setDrawAxisLine(false);
+        left.setGranularity(1);
+        left.setGranularityEnabled(true);
+        left.setDrawZeroLine(true);
 
         YAxis right = mChart.getAxisRight();
         right.setDrawAxisLine(false);
@@ -181,13 +181,14 @@ public class ContextCard implements IContextCard {
         bottom.setDrawGridLines(false);
 
         //make the x-axis show hours of the day
-        HourAxisValueFormatter hourAxisValueFormatter = new HourAxisValueFormatter(c.getTimeInMillis());
+        HourAxisValueFormatter hourAxisValueFormatter = new HourAxisValueFormatter();
         bottom.setValueFormatter(hourAxisValueFormatter);
 
         Legend l = mChart.getLegend();
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-
+        l.setForm(Legend.LegendForm.LINE);
+        l.setTypeface(Typeface.DEFAULT_BOLD);
 
         return mChart;
     }
@@ -196,31 +197,19 @@ public class ContextCard implements IContextCard {
      * Based on: https://github.com/PhilJay/MPAndroidChart/issues/789
      */
     private class HourAxisValueFormatter implements IAxisValueFormatter {
-
-        private long mReferenceTimestamp; //minimum timestamp in the dataset, i.e., beginning of the day
         private DateFormat mDateFormat;
-        private Date mDate;
+        private Calendar mDate;
 
-        HourAxisValueFormatter(long reference) {
-            this.mReferenceTimestamp = reference;
+        HourAxisValueFormatter() {
             this.mDateFormat = new SimpleDateFormat("HH", Locale.ENGLISH);
-            this.mDate = new Date();
+            this.mDate = Calendar.getInstance();
         }
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
-            long converted = (long) value;
-            long original = mReferenceTimestamp + converted;
-            return getHour(original);
-        }
-
-        private String getHour(long timestamp) {
-            try {
-                mDate.setTime(timestamp);
-                return mDateFormat.format(mDate);
-            } catch (Exception e) {
-                return "?";
-            }
+            mDate.setTimeInMillis((long) value);
+            mDate.setTimeZone(TimeZone.getDefault());
+            return mDateFormat.format(mDate.getTime());
         }
     }
 }
