@@ -27,17 +27,15 @@ public class OpenWeather_Service extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        boolean DEBUG = Aware.getSetting(this, Aware_Preferences.DEBUG_FLAG).equals("true");
-
         if (intent != null && intent.hasExtra(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED)) {
-
             Location location = (Location) intent.getExtras().get(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED);
-
             if (location == null) return;
 
             Http httpObj = new Http(this);
             String server_response = httpObj.dataGET(
-                    String.format(Settings.OPENWEATHER_API_URL,
+                    String.format(
+                            Locale.ENGLISH,
+                            Settings.OPENWEATHER_API_URL,
                             location.getLatitude(),
                             location.getLongitude(),
                             Locale.getDefault().getLanguage(),

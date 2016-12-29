@@ -13,12 +13,16 @@ import android.widget.TextView;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
 import com.aware.utils.IContextCard;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -106,15 +110,17 @@ public class ContextCard implements IContextCard {
         }
         if( latest_weather != null && ! latest_weather.isClosed() ) latest_weather.close();
 
-        drawGraph(context, weather_plot);
+        drawGraph( context, weather_plot );
 
 		return card;
 	}
 
     private LineChart drawGraph( Context context, LineChart mChart ) {
+
         //Get today's time from the beginning in milliseconds
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(System.currentTimeMillis());
+
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
@@ -127,7 +133,12 @@ public class ContextCard implements IContextCard {
 
         ArrayList<Entry> entries = new ArrayList<>();
         //add frequencies to the right hour buffer
-        Cursor weatherData = context.getContentResolver().query(OpenWeather_Data.CONTENT_URI, new String[]{ OpenWeather_Data.TEMPERATURE,"strftime('%H',"+ OpenWeather_Data.TIMESTAMP + "/1000, 'unixepoch', 'localtime')+0 as time_of_day" }, OpenWeather_Data.TIMESTAMP + " >= " + c.getTimeInMillis() + " ) GROUP BY ( time_of_day ", null, "time_of_day ASC");
+        Cursor weatherData = context.getContentResolver().query(OpenWeather_Data.CONTENT_URI,
+                new String[]{
+                        OpenWeather_Data.TIMESTAMP,
+                        OpenWeather_Data.TEMPERATURE
+                }, OpenWeather_Data.TIMESTAMP + " >= " + c.getTimeInMillis(), null, OpenWeather_Data.TIMESTAMP + " ASC");
+
         if( weatherData != null && weatherData.moveToFirst() ) {
             do{
                 entries.add( new Entry(weatherData.getInt(0), weatherData.getInt(1)) );
@@ -135,27 +146,30 @@ public class ContextCard implements IContextCard {
         }
         if( weatherData != null && ! weatherData.isClosed()) weatherData.close();
 
-        LineDataSet dataSet = new LineDataSet(entries, "Temperature");
+        LineDataSet dataSet = new LineDataSet(entries, "Air temperature throughout the day");
         dataSet.setColor(Color.parseColor("#33B5E5"));
         dataSet.setDrawValues(false);
+        dataSet.setDrawCircles(false);
+        dataSet.setLineWidth(2f);
+        dataSet.setDrawFilled(true);
 
-        LineData data = new LineData(x_hours, dataSet);
+        LineData data = new LineData(dataSet);
 
-        mChart.setContentDescription("");
-        mChart.setDescription("");
+        mChart.setData(data);
+        mChart.invalidate(); //refresh
 
         ViewGroup.LayoutParams params = mChart.getLayoutParams();
-        params.height = 200;
+        params.height = 400;
         mChart.setLayoutParams(params);
-
+        mChart.setContentDescription("");
         mChart.setBackgroundColor(Color.WHITE);
         mChart.setDrawGridBackground(false);
         mChart.setDrawBorders(false);
 
         YAxis left = mChart.getAxisLeft();
         left.setDrawLabels(true);
-        left.setDrawGridLines(true);
-        left.setDrawAxisLine(true);
+        left.setDrawGridLines(false);
+        left.setDrawAxisLine(false);
 
         YAxis right = mChart.getAxisRight();
         right.setDrawAxisLine(false);
@@ -164,13 +178,49 @@ public class ContextCard implements IContextCard {
 
         XAxis bottom = mChart.getXAxis();
         bottom.setPosition(XAxis.XAxisPosition.BOTTOM);
-        bottom.setSpaceBetweenLabels(0);
         bottom.setDrawGridLines(false);
 
-        mChart.setData(data);
-        mChart.invalidate();
-        mChart.animateX(1000);
+        //make the x-axis show hours of the day
+        HourAxisValueFormatter hourAxisValueFormatter = new HourAxisValueFormatter(c.getTimeInMillis());
+        bottom.setValueFormatter(hourAxisValueFormatter);
+
+        Legend l = mChart.getLegend();
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+
 
         return mChart;
+    }
+
+    /**
+     * Based on: https://github.com/PhilJay/MPAndroidChart/issues/789
+     */
+    private class HourAxisValueFormatter implements IAxisValueFormatter {
+
+        private long mReferenceTimestamp; //minimum timestamp in the dataset, i.e., beginning of the day
+        private DateFormat mDateFormat;
+        private Date mDate;
+
+        HourAxisValueFormatter(long reference) {
+            this.mReferenceTimestamp = reference;
+            this.mDateFormat = new SimpleDateFormat("HH", Locale.ENGLISH);
+            this.mDate = new Date();
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            long converted = (long) value;
+            long original = mReferenceTimestamp + converted;
+            return getHour(original);
+        }
+
+        private String getHour(long timestamp) {
+            try {
+                mDate.setTime(timestamp);
+                return mDateFormat.format(mDate);
+            } catch (Exception e) {
+                return "?";
+            }
+        }
     }
 }
