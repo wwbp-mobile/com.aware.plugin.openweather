@@ -131,7 +131,7 @@ public class Provider extends ContentProvider {
     private static HashMap<String, String> openWeatherMap;
 
 
-    private static DatabaseHelper dbHelper;
+    private DatabaseHelper dbHelper;
     private static SQLiteDatabase database;
 
     private void initialiseDatabase() {
@@ -238,8 +238,6 @@ public class Provider extends ContentProvider {
         openWeatherMap.put(OpenWeather_Data.SUNSET, OpenWeather_Data.SUNSET);
         openWeatherMap.put(OpenWeather_Data.WEATHER_ICON_ID, OpenWeather_Data.WEATHER_ICON_ID);
         openWeatherMap.put(OpenWeather_Data.WEATHER_DESCRIPTION, OpenWeather_Data.WEATHER_DESCRIPTION);
-
-        initialiseDatabase();
 
         return true;
     }
