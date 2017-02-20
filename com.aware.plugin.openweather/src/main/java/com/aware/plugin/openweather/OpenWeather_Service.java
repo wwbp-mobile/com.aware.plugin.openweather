@@ -31,8 +31,7 @@ public class OpenWeather_Service extends IntentService {
             Location location = (Location) intent.getExtras().get(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED);
             if (location == null) return;
 
-            Http httpObj = new Http(this);
-            String server_response = httpObj.dataGET(
+            String server_response = new Http().dataGET(
                     String.format(
                             Locale.ENGLISH,
                             Settings.OPENWEATHER_API_URL,
