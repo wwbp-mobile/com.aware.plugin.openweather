@@ -1,41 +1,23 @@
 package com.aware.plugin.openweather;
 
 import android.Manifest;
-import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.ServiceCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
-import com.aware.ui.PermissionsHandler;
 import com.aware.utils.Aware_Plugin;
-import com.aware.utils.Http;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Set;
 
 public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -56,6 +38,8 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     private static GoogleApiClient mGoogleApiClient;
     private final static LocationRequest locationRequest = new LocationRequest();
     private static PendingIntent pIntent;
+
+    private Intent aware;
 
     @Override
     public void onCreate() {
@@ -94,7 +78,8 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             pIntent = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
 
-        Aware.startAWARE(this);
+        aware = new Intent(this, Aware.class);
+        startService(aware);
     }
 
     @Override
@@ -133,7 +118,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             mGoogleApiClient.disconnect();
         }
 
-        Aware.stopAWARE(this);
+        stopService(aware);
     }
 
     private boolean is_google_services_available() {
