@@ -13,6 +13,7 @@ import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
 import com.aware.utils.Aware_Plugin;
+import com.aware.utils.PluginsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,8 +39,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     private static GoogleApiClient mGoogleApiClient;
     private final static LocationRequest locationRequest = new LocationRequest();
     private static PendingIntent pIntent;
-
-    private Intent aware;
 
     @Override
     public void onCreate() {
@@ -77,9 +76,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
             pIntent = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
-
-        aware = new Intent(this, Aware.class);
-        startService(aware);
     }
 
     @Override
@@ -87,6 +83,9 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
         super.onStartCommand(intent, flags, startId);
 
         if (PERMISSIONS_OK) {
+
+            PluginsManager.enablePlugin(this, "com.aware.plugin.openweather");
+
             DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
 
             Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, true);
@@ -102,6 +101,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             if (mGoogleApiClient != null && !mGoogleApiClient.isConnected())
                 mGoogleApiClient.connect();
 
+            Aware.startAWARE(this);
         }
 
         return START_STICKY;
@@ -118,7 +118,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             mGoogleApiClient.disconnect();
         }
 
-        stopService(aware);
+        Aware.stopAWARE(this);
     }
 
     private boolean is_google_services_available() {
