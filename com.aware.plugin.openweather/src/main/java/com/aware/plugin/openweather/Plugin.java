@@ -13,7 +13,6 @@ import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
 import com.aware.utils.Aware_Plugin;
-import com.aware.utils.PluginsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -84,8 +83,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
         if (PERMISSIONS_OK) {
 
-            PluginsManager.enablePlugin(this, "com.aware.plugin.openweather");
-
             DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
 
             Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, true);
@@ -101,6 +98,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             if (mGoogleApiClient != null && !mGoogleApiClient.isConnected())
                 mGoogleApiClient.connect();
 
+            Aware.startPlugin(this, "com.aware.plugin.openweather");
             Aware.startAWARE(this);
         }
 
