@@ -1,11 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.aware.plugin.openweather">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        tools:replace="android:icon, android:label">
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -13,11 +15,13 @@
 
         <service
             android:name="com.aware.plugin.openweather.Plugin"
-            android:exported="true" />
+            android:exported="true"
+            android:label="AWARE: OpenWeather" />
 
         <service
             android:name="com.aware.plugin.openweather.OpenWeather_Service"
-            android:exported="true" />
+            android:exported="true"
+            android:label="AWARE: OpenWeather Sync" />
 
         <activity
             android:name="com.aware.plugin.openweather.Settings"

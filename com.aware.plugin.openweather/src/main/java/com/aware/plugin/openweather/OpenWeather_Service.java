@@ -9,6 +9,7 @@ import android.util.Log;
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.utils.Http;
+import com.aware.utils.PluginsManager;
 import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONException;
@@ -22,22 +23,19 @@ import java.util.Locale;
 public class OpenWeather_Service extends IntentService {
 
     public OpenWeather_Service() {
-        super(Plugin.TAG);
+        super(Aware.TAG);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        boolean DEBUG = Aware.getSetting(this, Aware_Preferences.DEBUG_FLAG).equals("true");
-
         if (intent != null && intent.hasExtra(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED)) {
-
             Location location = (Location) intent.getExtras().get(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED);
-
             if (location == null) return;
 
-            Http httpObj = new Http(this);
-            String server_response = httpObj.dataGET(
-                    String.format(Settings.OPENWEATHER_API_URL,
+            String server_response = new Http().dataGET(
+                    String.format(
+                            Locale.ENGLISH,
+                            Settings.OPENWEATHER_API_URL,
                             location.getLatitude(),
                             location.getLongitude(),
                             Locale.getDefault().getLanguage(),
@@ -51,7 +49,7 @@ public class OpenWeather_Service extends IntentService {
             try {
                 JSONObject raw_data = new JSONObject(server_response);
 
-                if (Plugin.DEBUG) Log.d(Plugin.TAG, "OpenWeather answer: " + raw_data.toString(5));
+                if (Aware.DEBUG) Log.d(Aware.TAG, "OpenWeather answer: " + raw_data.toString(5));
 
                 JSONObject wind = raw_data.getJSONObject("wind");
                 JSONObject weather_characteristics = raw_data.getJSONObject("main");
@@ -128,7 +126,9 @@ public class OpenWeather_Service extends IntentService {
                 if (Plugin.sContextProducer != null)
                     Plugin.sContextProducer.onContext();
 
-                if (Plugin.DEBUG) Log.d(Plugin.TAG, weather_data.toString());
+                if (Aware.DEBUG) Log.d(Aware.TAG, weather_data.toString());
+
+                sendBroadcast(new Intent("ACTION_AWARE_UPDATE_STREAM"));
 
             } catch (JSONException e) {
                 e.printStackTrace();

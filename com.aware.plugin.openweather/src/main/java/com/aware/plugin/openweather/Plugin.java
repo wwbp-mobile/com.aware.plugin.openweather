@@ -1,41 +1,23 @@
 package com.aware.plugin.openweather;
 
 import android.Manifest;
-import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.ServiceCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
-import com.aware.ui.PermissionsHandler;
 import com.aware.utils.Aware_Plugin;
-import com.aware.utils.Http;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Set;
 
 public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -83,6 +65,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
         if (!is_google_services_available()) {
             if (DEBUG)
                 Log.e(TAG, "Google Services Fused location are not available on this device");
+            stopSelf();
         } else {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -92,23 +75,15 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
             Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
             pIntent = PendingIntent.getService(getApplicationContext(), 0, openWeatherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            Aware.startPlugin(this, "com.aware.plugin.openweather");
         }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
 
-        boolean permissions_ok = true;
-        for (String p : REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
-                permissions_ok = false;
-                break;
-            }
-        }
+        if (PERMISSIONS_OK) {
 
-        if (permissions_ok) {
             DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
 
             Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, true);
@@ -124,14 +99,11 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             if (mGoogleApiClient != null && !mGoogleApiClient.isConnected())
                 mGoogleApiClient.connect();
 
-        } else {
-            Intent permissions = new Intent(this, PermissionsHandler.class);
-            permissions.putExtra(PermissionsHandler.EXTRA_REQUIRED_PERMISSIONS, REQUIRED_PERMISSIONS);
-            permissions.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(permissions);
+            Aware.startPlugin(this, "com.aware.plugin.openweather");
+            Aware.startAWARE(this);
         }
 
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override
@@ -145,7 +117,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             mGoogleApiClient.disconnect();
         }
 
-        Aware.stopAWARE();
+        Aware.stopAWARE(this);
     }
 
     private boolean is_google_services_available() {

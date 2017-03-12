@@ -1,1 +1,1 @@
-include ':openWeather'
+include ':com.aware.plugin.openweather', ':com.aware.plugin.openweather.lib'
