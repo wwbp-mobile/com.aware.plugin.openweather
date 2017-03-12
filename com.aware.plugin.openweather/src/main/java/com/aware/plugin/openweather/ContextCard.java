@@ -2,6 +2,7 @@ package com.aware.plugin.openweather;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.SystemClock;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aware.Aware;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
 import com.aware.utils.IContextCard;
 import com.github.mikephil.charting.charts.LineChart;
@@ -131,14 +133,14 @@ public class ContextCard implements IContextCard {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
 
-        ArrayList<Entry> entries = new ArrayList<>();
         Cursor weatherData = context.getContentResolver().query(OpenWeather_Data.CONTENT_URI,
                 new String[]{
-                        "time(" + OpenWeather_Data.TIMESTAMP + ") as hour_of_day",
+                        "time(" + OpenWeather_Data.TIMESTAMP + ",'unixepoch','localtime') as hour_of_day",
                         OpenWeather_Data.TEMPERATURE
                 },
-                OpenWeather_Data.TIMESTAMP + " >= " + c.getTimeInMillis(), null, OpenWeather_Data.TIMESTAMP + " ASC");
+                OpenWeather_Data.TIMESTAMP + " >= " + c.getTimeInMillis() + ") GROUP BY ( hour_of_day ", null, OpenWeather_Data.TIMESTAMP + " ASC");
 
+        ArrayList<Entry> entries = new ArrayList<>();
         if (weatherData != null && weatherData.moveToFirst()) {
             do {
                 try {
@@ -154,7 +156,7 @@ public class ContextCard implements IContextCard {
         LineDataSet dataSet = new LineDataSet(entries, "Air temperature throughout the day");
         dataSet.setColor(Color.parseColor("#33B5E5"));
         dataSet.setDrawValues(false);
-        dataSet.setDrawCircles(false);
+        dataSet.setDrawCircles(true);
         dataSet.setLineWidth(2f);
         dataSet.setDrawFilled(true);
 
@@ -188,6 +190,8 @@ public class ContextCard implements IContextCard {
         XAxis bottom = mChart.getXAxis();
         bottom.setPosition(XAxis.XAxisPosition.BOTTOM);
         bottom.setDrawGridLines(false);
+        bottom.setGranularityEnabled(true);
+        bottom.setGranularity(1);
 
         Legend l = mChart.getLegend();
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);

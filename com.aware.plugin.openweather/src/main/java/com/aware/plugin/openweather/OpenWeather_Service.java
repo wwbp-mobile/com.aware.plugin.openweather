@@ -9,6 +9,7 @@ import android.util.Log;
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.utils.Http;
+import com.aware.utils.PluginsManager;
 import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONException;
@@ -22,7 +23,7 @@ import java.util.Locale;
 public class OpenWeather_Service extends IntentService {
 
     public OpenWeather_Service() {
-        super(Plugin.TAG);
+        super(Aware.TAG);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class OpenWeather_Service extends IntentService {
             try {
                 JSONObject raw_data = new JSONObject(server_response);
 
-                if (Plugin.DEBUG) Log.d(Plugin.TAG, "OpenWeather answer: " + raw_data.toString(5));
+                if (Aware.DEBUG) Log.d(Aware.TAG, "OpenWeather answer: " + raw_data.toString(5));
 
                 JSONObject wind = raw_data.getJSONObject("wind");
                 JSONObject weather_characteristics = raw_data.getJSONObject("main");
@@ -125,7 +126,9 @@ public class OpenWeather_Service extends IntentService {
                 if (Plugin.sContextProducer != null)
                     Plugin.sContextProducer.onContext();
 
-                if (Plugin.DEBUG) Log.d(Plugin.TAG, weather_data.toString());
+                if (Aware.DEBUG) Log.d(Aware.TAG, weather_data.toString());
+
+                sendBroadcast(new Intent("ACTION_AWARE_UPDATE_STREAM"));
 
             } catch (JSONException e) {
                 e.printStackTrace();

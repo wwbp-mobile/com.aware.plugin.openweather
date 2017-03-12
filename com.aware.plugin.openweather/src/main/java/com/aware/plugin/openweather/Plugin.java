@@ -65,6 +65,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
         if (!is_google_services_available()) {
             if (DEBUG)
                 Log.e(TAG, "Google Services Fused location are not available on this device");
+            stopSelf();
         } else {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
