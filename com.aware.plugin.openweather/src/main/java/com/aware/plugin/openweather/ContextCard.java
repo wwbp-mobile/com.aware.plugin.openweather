@@ -138,7 +138,7 @@ public class ContextCard implements IContextCard {
                         "time(" + OpenWeather_Data.TIMESTAMP + ",'unixepoch','localtime') as hour_of_day",
                         OpenWeather_Data.TEMPERATURE
                 },
-                OpenWeather_Data.TIMESTAMP + " >= " + c.getTimeInMillis() + ") GROUP BY ( hour_of_day ", null, OpenWeather_Data.TIMESTAMP + " ASC");
+                OpenWeather_Data.TIMESTAMP + " >= " + c.getTimeInMillis() + ") GROUP BY (hour_of_day", null, OpenWeather_Data.TIMESTAMP + " ASC");
 
         ArrayList<Entry> entries = new ArrayList<>();
         if (weatherData != null && weatherData.moveToFirst()) {
