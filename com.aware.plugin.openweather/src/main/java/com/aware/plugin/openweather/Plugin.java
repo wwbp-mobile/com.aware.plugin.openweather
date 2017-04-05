@@ -13,11 +13,14 @@ import com.aware.Aware;
 import com.aware.Aware_Preferences;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
 import com.aware.utils.Aware_Plugin;
+import com.aware.utils.Scheduler;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+
+import org.json.JSONException;
 
 public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -35,9 +38,11 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     public static ContextProducer sContextProducer;
     public static ContentValues sOpenWeather;
 
-    private static GoogleApiClient mGoogleApiClient;
+    public static GoogleApiClient mGoogleApiClient;
     private final static LocationRequest locationRequest = new LocationRequest();
     private static PendingIntent pIntent;
+
+    private static final String SCHEDULER_PLUGIN_OPENWEATHER = "scheduler_plugin_openweather";
 
     @Override
     public void onCreate() {
@@ -99,8 +104,21 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             if (mGoogleApiClient != null && !mGoogleApiClient.isConnected())
                 mGoogleApiClient.connect();
 
-            Aware.startPlugin(this, "com.aware.plugin.openweather");
             Aware.startAWARE(this);
+
+            try {
+                Scheduler.Schedule openweather = Scheduler.getSchedule(this, SCHEDULER_PLUGIN_OPENWEATHER);
+                if (openweather == null || openweather.getInterval() != Long.parseLong(Aware.getSetting(getApplicationContext(), Settings.PLUGIN_OPENWEATHER_FREQUENCY))) {
+                    openweather = new Scheduler.Schedule(SCHEDULER_PLUGIN_OPENWEATHER);
+                    openweather
+                            .setInterval(Long.parseLong(Aware.getSetting(getApplicationContext(), Settings.PLUGIN_OPENWEATHER_FREQUENCY)))
+                            .setActionType(Scheduler.ACTION_TYPE_SERVICE)
+                            .setActionClass(getPackageName() + "/" + OpenWeather_Service.class.getName());
+                    Scheduler.saveSchedule(this, openweather);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         return START_STICKY;
@@ -137,12 +155,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
         try {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, pIntent);
-            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (lastLocation != null) {
-                Intent openWeatherIntent = new Intent(getApplicationContext(), OpenWeather_Service.class);
-                openWeatherIntent.putExtra(LocationServices.FusedLocationApi.KEY_LOCATION_CHANGED, lastLocation);
-                startService(openWeatherIntent);
-            }
         } catch (SecurityException e) {
             e.printStackTrace();
         }
