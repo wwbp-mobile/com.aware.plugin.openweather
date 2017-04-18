@@ -18,11 +18,6 @@
             android:exported="true"
             android:label="AWARE: OpenWeather" />
 
-        <service
-            android:name="com.aware.plugin.openweather.OpenWeather_Service"
-            android:exported="true"
-            android:label="AWARE: OpenWeather Sync" />
-
         <activity
             android:name="com.aware.plugin.openweather.Settings"
             android:exported="true" />

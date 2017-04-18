@@ -135,7 +135,7 @@ public class ContextCard implements IContextCard {
 
         Cursor weatherData = context.getContentResolver().query(OpenWeather_Data.CONTENT_URI,
                 new String[]{
-                        "time(" + OpenWeather_Data.TIMESTAMP + ",'unixepoch','localtime') as hour_of_day",
+                        "time(" + OpenWeather_Data.TIMESTAMP + "/1000,'unixepoch','localtime') as hour_of_day",
                         OpenWeather_Data.TEMPERATURE
                 },
                 OpenWeather_Data.TIMESTAMP + " >= " + c.getTimeInMillis() + ") GROUP BY (hour_of_day", null, OpenWeather_Data.TIMESTAMP + " ASC");
