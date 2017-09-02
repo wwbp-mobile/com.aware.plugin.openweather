@@ -6,13 +6,11 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
-import com.aware.plugin.openweather.Provider.OpenWeather_Data;
 import com.aware.utils.Aware_Plugin;
 import com.aware.utils.Http;
 import com.aware.utils.Scheduler;
@@ -59,10 +57,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
         super.onCreate();
 
         TAG = "AWARE: OpenWeather";
-
-        DATABASE_TABLES = Provider.DATABASE_TABLES;
-        TABLES_FIELDS = Provider.TABLES_FIELDS;
-        CONTEXT_URIS = new Uri[]{OpenWeather_Data.CONTENT_URI};
 
         CONTEXT_PRODUCER = new ContextProducer() {
             @Override
