@@ -56,6 +56,8 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     public void onCreate() {
         super.onCreate();
 
+        AUTHORITY = Provider.getAuthority(this);
+
         TAG = "AWARE: OpenWeather";
 
         CONTEXT_PRODUCER = new ContextProducer() {
