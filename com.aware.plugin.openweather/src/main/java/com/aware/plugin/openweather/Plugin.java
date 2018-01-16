@@ -246,7 +246,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
             if (!Aware.isSyncEnabled(this, Provider.getAuthority(this)) && Aware.isStudy(this) && getApplicationContext().getPackageName().equalsIgnoreCase("com.aware.phone") || getApplicationContext().getResources().getBoolean(R.bool.standalone)) {
                 ContentResolver.setIsSyncable(Aware.getAWAREAccount(this), Provider.getAuthority(this), 1);
-                ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Provider.getAuthority(this), true);
+                //ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Provider.getAuthority(this), true);
                 ContentResolver.addPeriodicSync(
                         Aware.getAWAREAccount(this),
                         Provider.getAuthority(this),
@@ -266,7 +266,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
         super.onDestroy();
 
         if (Aware.isStudy(this) && (getApplicationContext().getPackageName().equalsIgnoreCase("com.aware.phone") || getApplicationContext().getResources().getBoolean(R.bool.standalone))) {
-            ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Provider.getAuthority(this), false);
+            //ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Provider.getAuthority(this), false);
             ContentResolver.removePeriodicSync(
                     Aware.getAWAREAccount(this),
                     Provider.getAuthority(this),
