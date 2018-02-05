@@ -27,9 +27,10 @@
         <provider
             android:name="com.aware.plugin.openweather.Provider"
             android:authorities="${applicationId}.provider.openweather"
-            android:label="@string/plugin_openweather"
             android:exported="true"
+            android:label="@string/plugin_openweather"
             android:readPermission="com.aware.READ_CONTEXT_DATA"
+            android:syncable="true"
             android:writePermission="com.aware.WRITE_CONTEXT_DATA" />
 
         <service
@@ -38,7 +39,9 @@
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/sync_openweather" />
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_openweather" />
         </service>
 
     </application>
