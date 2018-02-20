@@ -246,7 +246,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
                 }
             }
 
-            if (!Aware.isSyncEnabled(this, Provider.getAuthority(this)) && Aware.isStudy(this)) {
+            if (Aware.isStudy(this)) {
                 Account aware_account = Aware.getAWAREAccount(getApplicationContext());
                 String authority = Provider.getAuthority(getApplicationContext());
                 long frequency = Long.parseLong(Aware.getSetting(this, Aware_Preferences.FREQUENCY_WEBSERVICE)) * 60;
@@ -254,7 +254,7 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
                 ContentResolver.setIsSyncable(aware_account, authority, 1);
                 ContentResolver.setSyncAutomatically(aware_account, authority, true);
                 SyncRequest request = new SyncRequest.Builder()
-                        .syncPeriodic(frequency, frequency/3)
+                        .syncPeriodic(frequency, frequency / 3)
                         .setSyncAdapter(aware_account, authority)
                         .setExtras(new Bundle()).build();
                 ContentResolver.requestSync(request);
@@ -270,14 +270,12 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     public void onDestroy() {
         super.onDestroy();
 
-        if (Aware.isSyncEnabled(this, Provider.getAuthority(this))) {
-            ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Provider.getAuthority(this), false);
-            ContentResolver.removePeriodicSync(
-                    Aware.getAWAREAccount(this),
-                    Provider.getAuthority(this),
-                    Bundle.EMPTY
-            );
-        }
+        ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Provider.getAuthority(this), false);
+        ContentResolver.removePeriodicSync(
+                Aware.getAWAREAccount(this),
+                Provider.getAuthority(this),
+                Bundle.EMPTY
+        );
 
         Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, false);
 
