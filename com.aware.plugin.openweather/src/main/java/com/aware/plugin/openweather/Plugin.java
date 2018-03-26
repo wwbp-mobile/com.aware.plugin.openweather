@@ -1,17 +1,18 @@
 package com.aware.plugin.openweather;
 
 import android.Manifest;
+import android.accounts.Account;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SyncRequest;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
-import com.aware.plugin.openweather.Provider.OpenWeather_Data;
 import com.aware.utils.Aware_Plugin;
 import com.aware.utils.Http;
 import com.aware.utils.Scheduler;
@@ -57,11 +58,9 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     public void onCreate() {
         super.onCreate();
 
-        TAG = "AWARE: OpenWeather";
+        AUTHORITY = Provider.getAuthority(this);
 
-        DATABASE_TABLES = Provider.DATABASE_TABLES;
-        TABLES_FIELDS = Provider.TABLES_FIELDS;
-        CONTEXT_URIS = new Uri[]{OpenWeather_Data.CONTENT_URI};
+        TAG = "AWARE: OpenWeather";
 
         CONTEXT_PRODUCER = new ContextProducer() {
             @Override
@@ -247,6 +246,20 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
                 }
             }
 
+            if (Aware.isStudy(this)) {
+                Account aware_account = Aware.getAWAREAccount(getApplicationContext());
+                String authority = Provider.getAuthority(getApplicationContext());
+                long frequency = Long.parseLong(Aware.getSetting(this, Aware_Preferences.FREQUENCY_WEBSERVICE)) * 60;
+
+                ContentResolver.setIsSyncable(aware_account, authority, 1);
+                ContentResolver.setSyncAutomatically(aware_account, authority, true);
+                SyncRequest request = new SyncRequest.Builder()
+                        .syncPeriodic(frequency, frequency / 3)
+                        .setSyncAdapter(aware_account, authority)
+                        .setExtras(new Bundle()).build();
+                ContentResolver.requestSync(request);
+            }
+
             Aware.startAWARE(this);
         }
 
@@ -256,6 +269,13 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Provider.getAuthority(this), false);
+        ContentResolver.removePeriodicSync(
+                Aware.getAWAREAccount(this),
+                Provider.getAuthority(this),
+                Bundle.EMPTY
+        );
 
         Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, false);
 
