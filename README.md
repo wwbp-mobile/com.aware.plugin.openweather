@@ -1,9 +1,9 @@
 AWARE: OpenWeather
 ==========================
 
-This plugin uses Google Fused Location in low power mode and OpenWeather API to provide the weather conditions where the user is.
+[![Release](https://jitpack.io/v/denzilferreira/com.aware.plugin.openweather.svg)](https://jitpack.io/#denzilferreira/com.aware.plugin.openweather)
 
-[ ![Download](https://api.bintray.com/packages/denzilferreira/com.awareframework/com.aware.plugin.openweather/images/download.svg) ](https://bintray.com/denzilferreira/com.awareframework/com.aware.plugin.openweather/_latestVersion)
+This plugin uses Google Fused Location in low power mode and OpenWeather API to provide the weather conditions where the user is.
 
 # Settings
 Parameters adjusted on the dashboard and client:
