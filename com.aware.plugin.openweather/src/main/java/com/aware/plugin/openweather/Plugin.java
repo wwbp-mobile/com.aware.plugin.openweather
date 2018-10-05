@@ -259,8 +259,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
                         .setExtras(new Bundle()).build();
                 ContentResolver.requestSync(request);
             }
-
-            Aware.startAWARE(this);
         }
 
         return START_STICKY;
@@ -283,8 +281,6 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, pIntent);
             mGoogleApiClient.disconnect();
         }
-
-        Aware.stopAWARE(this);
     }
 
     private boolean is_google_services_available() {
