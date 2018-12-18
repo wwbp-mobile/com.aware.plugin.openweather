@@ -2,31 +2,23 @@ package com.aware.plugin.openweather;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.aware.Aware;
 import com.aware.plugin.openweather.Provider.OpenWeather_Data;
 import com.aware.utils.IContextCard;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class ContextCard implements IContextCard {
 
@@ -46,7 +37,7 @@ public class ContextCard implements IContextCard {
     }
 
     public View getContextCard(Context context) {
-        RelativeLayout card = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.layout, null);
+        RelativeLayout card = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.layout_openweather, null);
 
         ImageView weather_icon = (ImageView) card.findViewById(R.id.icon_weather);
         TextView weather_city = (TextView) card.findViewById(R.id.weather_city);
