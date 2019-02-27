@@ -17,6 +17,7 @@
 
         <activity
             android:name="com.aware.plugin.openweather.Settings"
+            android:label="AWARE: Openweather"
             android:exported="true" />
 
         <provider
