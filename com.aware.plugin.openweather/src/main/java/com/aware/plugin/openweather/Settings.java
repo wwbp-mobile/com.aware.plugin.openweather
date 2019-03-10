@@ -18,7 +18,7 @@ public class Settings extends AppCompatPreferenceActivity implements OnSharedPre
     /**
      * OpenWeather API endpoint
      */
-    public static final String OPENWEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&units=%s&appid=%s";
+    public static final String OPENWEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&lang=%s&units=%s&appid=%s";
 
     /**
      * State
