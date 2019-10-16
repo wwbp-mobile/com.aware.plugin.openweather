@@ -100,7 +100,15 @@ public class Plugin extends Aware_Plugin implements GoogleApiClient.ConnectionCa
 
             DEBUG = Aware.getSetting(getApplicationContext(), Aware_Preferences.DEBUG_FLAG).equals("true");
 
-            Aware.setSetting(this, Settings.STATUS_PLUGIN_OPENWEATHER, true);
+            if (Aware.getSetting(getApplicationContext(), Settings.STATUS_PLUGIN_OPENWEATHER).length() == 0) {
+                Aware.setSetting(getApplicationContext(), Settings.STATUS_PLUGIN_OPENWEATHER, true);
+            } else {
+                if (Aware.getSetting(getApplicationContext(), Settings.STATUS_PLUGIN_OPENWEATHER).equalsIgnoreCase("false")) {
+                    Aware.stopPlugin(getApplicationContext(), getPackageName());
+                    return START_STICKY;
+                }
+            }
+
             if (Aware.getSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER).length() == 0)
                 Aware.setSetting(getApplicationContext(), Settings.UNITS_PLUGIN_OPENWEATHER, "metric");
 
