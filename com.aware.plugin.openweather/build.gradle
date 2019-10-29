@@ -43,8 +43,4 @@ android {
     }
 }
 
-dependencies {
-    implementation "com.google.android.gms:play-services-location:$google_libs"
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
-    api project(':aware-core')
-}
+apply from: '../dependencies'
